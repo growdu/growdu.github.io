@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>dpdk_kni_use</title>
+    <link href="/2022/07/26/dpdk-kni-use/"/>
+    <url>/2022/07/26/dpdk-kni-use/</url>
+    
+    <content type="html"><![CDATA[<p>this is how use dpdk kni.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>dpdk</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>dpdk</tag>
+      
+      <tag>kni</tag>
+      
+      <tag>linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>use-code-server</title>
+    <link href="/2022/07/26/use-code-server/"/>
+    <url>/2022/07/26/use-code-server/</url>
+    
+    <content type="html"><![CDATA[<h1 id="code-server安装"><a href="#code-server安装" class="headerlink" title="code-server安装"></a>code-server安装</h1><p>code-server是C&#x2F;S架构，一般将服务端部署在linux机器上，然后我们就可以在windows端通过浏览器来访问linux机器上的代码。</p><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://github.com/coder/code-server/releases/download/v4.5.1/code-server-4.5.1-linux-amd64.tar.gz<br>tar -xvf code-server-4.5.1-linux-amd64.tar.gz<br>cd code-server-4.5.1-linux-amd64<br>./code-server --host ip --port port<br></code></pre></td></tr></table></figure><h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>客户端可以使用chrome的app模式来启动，具体执行脚本如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1.bat</span><br>start &quot;&quot; &quot;C:\Program Files\Google\Chrome\Application\chrome.exe&quot; --app=http://host:port/<br></code></pre></td></tr></table></figure><p>服务端启动后，双击1.bat文件即可以访问linux服务器代码。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>博客搭建</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>博客搭建</tag>
+      
+      <tag>node</tag>
+      
+      <tag>git</tag>
+      
+      <tag>github</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
