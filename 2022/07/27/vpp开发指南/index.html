@@ -16,27 +16,25 @@
   <meta name="author" content="growdu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="code-server安装code-server是C&#x2F;S架构，一般将服务端部署在linux机器上，然后我们就可以在windows端通过浏览器来访问linux机器上的代码。 服务端1234wget https:&#x2F;&#x2F;github.com&#x2F;coder&#x2F;code-server&#x2F;releases&#x2F;download&#x2F;v4.5.1&#x2F;code-server-4.5.1-linux-amd64.tar.g">
+    <meta name="description" content="vpp开发指南vpp二次开发一般都是基于vpp框架进行插件开发。具体友包含以下几个方面：  配置 插入节点 收包 发包  配置12345&#x2F;&#x2F; sample_config是配置读取函数&#x2F;&#x2F; sample是startup.conf文件中的模块名字VLIB_CONFIG_FUNCTION (sample_config, &quot;sample&quot;);&#x2F;&#x2F; 读取完配置后可以使用sample_in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="use-code-server">
-<meta property="og:url" content="http://example.com/2022/07/26/use-code-server/index.html">
+<meta property="og:title" content="vpp开发指南">
+<meta property="og:url" content="http://example.com/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/index.html">
 <meta property="og:site_name" content="growdu&#39;s blog">
-<meta property="og:description" content="code-server安装code-server是C&#x2F;S架构，一般将服务端部署在linux机器上，然后我们就可以在windows端通过浏览器来访问linux机器上的代码。 服务端1234wget https:&#x2F;&#x2F;github.com&#x2F;coder&#x2F;code-server&#x2F;releases&#x2F;download&#x2F;v4.5.1&#x2F;code-server-4.5.1-linux-amd64.tar.g">
+<meta property="og:description" content="vpp开发指南vpp二次开发一般都是基于vpp框架进行插件开发。具体友包含以下几个方面：  配置 插入节点 收包 发包  配置12345&#x2F;&#x2F; sample_config是配置读取函数&#x2F;&#x2F; sample是startup.conf文件中的模块名字VLIB_CONFIG_FUNCTION (sample_config, &quot;sample&quot;);&#x2F;&#x2F; 读取完配置后可以使用sample_in">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-26T08:11:30.000Z">
-<meta property="article:modified_time" content="2022-07-26T14:37:20.244Z">
+<meta property="article:published_time" content="2022-07-27T14:12:09.000Z">
+<meta property="article:modified_time" content="2022-07-27T14:14:34.029Z">
 <meta property="article:author" content="growdu">
-<meta property="article:tag" content="博客搭建">
-<meta property="article:tag" content="node">
-<meta property="article:tag" content="git">
-<meta property="article:tag" content="github">
+<meta property="article:tag" content="vpp">
+<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>use-code-server - growdu&#39;s blog</title>
+  <title>vpp开发指南 - growdu&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="use-code-server"></span>
+            <span id="subtitle" data-typed-text="vpp开发指南"></span>
           
         </div>
 
@@ -212,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-26 16:11" pubdate>
-          2022年7月26日 下午
+        <time datetime="2022-07-27 22:12" pubdate>
+          2022年7月27日 晚上
         </time>
       </span>
     
@@ -224,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          483 字
+          913 字
         
       </span>
     
@@ -235,7 +233,7 @@
         
         
         
-          5 分钟
+          8 分钟
         
       </span>
     
@@ -281,18 +279,40 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">use-code-server</h1>
+            <h1 style="display: none">vpp开发指南</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="code-server安装"><a href="#code-server安装" class="headerlink" title="code-server安装"></a>code-server安装</h1><p>code-server是C&#x2F;S架构，一般将服务端部署在linux机器上，然后我们就可以在windows端通过浏览器来访问linux机器上的代码。</p>
-<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://github.com/coder/code-server/releases/download/v4.5.1/code-server-4.5.1-linux-amd64.tar.gz<br>tar -xvf code-server-4.5.1-linux-amd64.tar.gz<br>cd code-server-4.5.1-linux-amd64<br>./code-server --host ip --port port<br></code></pre></td></tr></table></figure>
+                <h1 id="vpp开发指南"><a href="#vpp开发指南" class="headerlink" title="vpp开发指南"></a>vpp开发指南</h1><p>vpp二次开发一般都是基于vpp框架进行插件开发。具体友包含以下几个方面：</p>
+<ul>
+<li>配置</li>
+<li>插入节点</li>
+<li>收包</li>
+<li>发包</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// sample_config是配置读取函数</span><br><span class="hljs-comment">// sample是startup.conf文件中的模块名字</span><br>VLIB_CONFIG_FUNCTION (sample_config, <span class="hljs-string">&quot;sample&quot;</span>);<br><span class="hljs-comment">// 读取完配置后可以使用sample_init来进行初始化</span><br>VLIB_INIT_FUNCTION(sample_init);<br></code></pre></td></tr></table></figure>
 
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>客户端可以使用chrome的app模式来启动，具体执行脚本如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1.bat</span><br>start &quot;&quot; &quot;C:\Program Files\Google\Chrome\Application\chrome.exe&quot; --app=http://host:port/<br></code></pre></td></tr></table></figure>
+<h2 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 注册一个名为sample_node的节点</span><br>VLIB_REGISTER_NODE (sample_node);<br><span class="hljs-comment">// sample_node收到报文后如何处理</span><br>VLIB_NODE_FN (sample_node) (<span class="hljs-type">vlib_main_t</span> * vm, <span class="hljs-type">vlib_node_runtime_t</span> * node,<br>				<span class="hljs-type">vlib_frame_t</span> * f);<br></code></pre></td></tr></table></figure>
 
-<p>服务端启动后，双击1.bat文件即可以访问linux服务器代码。</p>
+<h2 id="收包"><a href="#收包" class="headerlink" title="收包"></a>收包</h2><p>收包插入一个收包节点，组织节点关系即可。</p>
+<ul>
+<li><p>L1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">vnet_hw_interface_rx_redirect_to_node (<span class="hljs-type">vnet_main_t</span> *vnm, u32 hw_if_index, u32 node_index);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>L2、L3</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">ethernet_register_input_type (<span class="hljs-type">vlib_main_t</span> *vm, <span class="hljs-type">ethernet_type_t</span> type, u32 node_index);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>L4</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">ip4_register_protocol (u32 protocol, u32 node_index);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>L5</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">udp_register_dst_port (<span class="hljs-type">vlib_main_t</span> * vm, <span class="hljs-type">udp_dst_port_t</span> dst_port, u32 node_index, u8 is_ip4);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="发包"><a href="#发包" class="headerlink" title="发包"></a>发包</h2><p>发包插入一个发包节点，组织节点关系即可。</p>
+<h2 id="命令下发"><a href="#命令下发" class="headerlink" title="命令下发"></a>命令下发</h2><p>注册cli命令，进而可以在vppctl中对vpp流程进行控制。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">VLIB_CLI_COMMAND (sample_node, <span class="hljs-type">static</span>) = &#123;<br>  .path = <span class="hljs-string">&quot;sample&quot;</span>,<br>  .function = sample,<br>  .short_help = <span class="hljs-string">&quot;sample&quot;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -311,7 +331,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="category-chain-item">博客搭建</a>
+  <a href="/categories/vpp/" class="category-chain-item">vpp</a>
   
   
 
@@ -326,13 +346,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">#博客搭建</a>
+        <a href="/tags/vpp/">#vpp</a>
       
-        <a href="/tags/node/">#node</a>
-      
-        <a href="/tags/git/">#git</a>
-      
-        <a href="/tags/github/">#github</a>
+        <a href="/tags/%E7%BD%91%E7%BB%9C/">#网络</a>
       
     </div>
   
@@ -344,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>use-code-server</div>
-      <div>http://example.com/2022/07/26/use-code-server/</div>
+      <div>vpp开发指南</div>
+      <div>http://example.com/2022/07/27/vpp开发指南/</div>
     </div>
     <div class="license-meta">
       
@@ -357,7 +373,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月26日</div>
+          <div>2022年7月27日</div>
         </div>
       
       
@@ -387,15 +403,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">dpdk_kni_use</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">
+                        <span class="hidden-mobile">dpdk_kni_use</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
