@@ -15,9 +15,9 @@
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
 
-<link rel="alternate" type="application/rss+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/atom.xml" />
-<link rel="alternate" type="application/json" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/feed.json" />
+<link rel="alternate" type="application/rss+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/atom.xml" />
+<link rel="alternate" type="application/json" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/feed.json" />
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
@@ -27,7 +27,7 @@
   <meta name="keywords" content="c,autoconf,make" />
 
 
-<link rel="canonical" href="http://example.com/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/">
+<link rel="canonical" href="http://growdu.online/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/">
 
 
 
@@ -117,12 +117,12 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh3brzpj20zk0m8ann.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevuctzzj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeuv80yoj20zk0m8kjl.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4lm9i7j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeuv80yoj20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclj61ylzj20zk0m8b29.jpg"></li>
         </ul>
       </div>
     </header>
@@ -153,7 +153,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
-  <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/">
+  <link itemprop="mainEntityOfPage" href="http://growdu.online/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -168,90 +168,133 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="autoconf使用"><a class="markdownIt-Anchor" href="#autoconf使用">#</a> autoconf 使用</h1>
-<h2 id="简介"><a class="markdownIt-Anchor" href="#简介">#</a> 简介</h2>
-<blockquote>
-<p>Autoconf 是一个用于生成 shell 脚本的工具，可自动配置源码包以适应多种类 Posix 的系统，产生的配置脚本通常叫做 configure。Autoconf 的目标是为每个用户提供可移植的配置。</p>
-<p>Autoconf 解决了一个重要的问题 - 可靠地发现系统特定的构建和运行时信息。为此，GNU 项目开发了一套集成实用程序来完成 Autoconf 的工作：GNU 构建系统，其最重要的组件是 Autoconf，Automake 和 Libtool。</p>
+    <h1 id="autoconf使用"><a href="#autoconf使用" class="headerlink" title="autoconf使用"></a>autoconf使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>Autoconf是一个用于生成shell脚本的工具，可自动配置源码包以适应多种类Posix的系统,产生的配置脚本通常叫做configure。Autoconf的目标是为每个用户提供可移植的配置。</p>
+<p>Autoconf解决了一个重要的问题 - 可靠地发现系统特定的构建和运行时信息。为此，GNU项目开发了一套集成实用程序来完成Autoconf的工作：GNU构建系统，其最重要的组件是Autoconf，Automake和Libtool。</p>
 <p>使用以下命令来安装我们需要的组件：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> autoconf automake libtool</pre></td></tr></table></figure></blockquote>
-<blockquote>
-<p>使用 automake, 程序开发人员只需要写一些简单的 含有预定义宏的 文件，由 autoconf 根据一个宏文件生成 configure,<a target="_blank" rel="noopener" href="http://xn--automakeMakefile-2l9yvve5jh37axy0bv53a3tgmrnymqe92fona.in"> 由 automake 根据另一个宏文件生成 Makefile.in</a>, 再使用 configure 依据 Makefile.in 来生成一个符合惯例的 Makefile.</p>
+<pre><code class="shell">sudo apt-get install autoconf automake libtool
+</code></pre>
 </blockquote>
-<p>使用 autoconf 的最终目的是生成能够根据不同系统生成 Makefile 的 configure 文件，一般情况下我们需要准备如下内容：</p>
+<blockquote>
+<p>使用automake,程序开发人员只需要写一些简单的 含有预定义宏的 文件,由autoconf根据一个宏文件生成configure,由automake根据另一个宏文件生成Makefile.in,再使用configure依据Makefile.in来生成一个符合惯例的 Makefile.</p>
+</blockquote>
+<p>使用autoconf的最终目的是生成能够根据不同系统生成Makefile的configure文件，一般情况下我们需要准备如下内容：</p>
 <ol>
 <li>源码</li>
-<li><a target="_blank" rel="noopener" href="http://configure.ac">configure.ac</a></li>
-<li><a target="_blank" rel="noopener" href="http://Makefile.am">Makefile.am</a></li>
+<li>configure.ac</li>
+<li>Makefile.am</li>
 </ol>
-<p>然后通过如下一系列命令可以生成 configure 文件：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>aclocal<span class="token punctuation">;</span> autoconf<span class="token punctuation">;</span> autoheadr<span class="token punctuation">;</span>automake --add-missing<span class="token punctuation">;</span></pre></td></tr></table></figure><h2 id="使用"><a class="markdownIt-Anchor" href="#使用">#</a> 使用</h2>
-<p>在 test 目录下有一个 main.c 文件，其内容如下：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>ha@ha-virtual-machine:~/test$ <span class="token function">ls</span></pre></td></tr><tr><td data-num="2"></td><td><pre>main.c</pre></td></tr><tr><td data-num="3"></td><td><pre>ha@ha-virtual-machine:~/test$ <span class="token function">cat</span> main.c</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">#include &lt;stdio.h></span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>int <span class="token function-name function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>        printf<span class="token punctuation">(</span><span class="token string">"This is src<span class="token entity" title="\n">\n</span>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token builtin class-name">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>我们使用 autoconf 来对其进行编译构建。</p>
+<p>然后通过如下一系列命令可以生成configure文件：</p>
+<pre><code class="shell">aclocal; autoconf; autoheadr;automake --add-missing;
+</code></pre>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>在test目录下有一个main.c文件，其内容如下：</p>
+<pre><code class="shell">ha@ha-virtual-machine:~/test$ ls
+main.c
+ha@ha-virtual-machine:~/test$ cat main.c
+#include &lt;stdio.h&gt;
+
+int main()&#123;
+        printf(&quot;This is src\n&quot;);
+        return 0;
+&#125;
+</code></pre>
+<p>我们使用autoconf来对其进行编译构建。</p>
 <ol>
-<li>
-<p>使用 autoscan 扫描当前目录，生成 configure.scan 文件；可以看到当前目录结构如下：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>ha@ha-virtual-machine:~/test$ autoscan</pre></td></tr><tr><td data-num="2"></td><td><pre>ha@ha-virtual-machine:~/test$ <span class="token function">ls</span></pre></td></tr><tr><td data-num="3"></td><td><pre>autoscan.log  configure.scan  main.c</pre></td></tr><tr><td data-num="4"></td><td><pre>ha@ha-virtual-machine:~/test$ <span class="token function">cat</span> configure.scan</pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment">#                                               -*- Autoconf -*-</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token comment"># Process this file with autoconf to produce a configure script.</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>AC_PREREQ<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2.71</span><span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre>AC_INIT<span class="token punctuation">(</span><span class="token punctuation">[</span>FULL-PACKAGE-NAME<span class="token punctuation">]</span>, <span class="token punctuation">[</span>VERSION<span class="token punctuation">]</span>, <span class="token punctuation">[</span>BUG-REPORT-ADDRESS<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>AC_CONFIG_SRCDIR<span class="token punctuation">(</span><span class="token punctuation">[</span>main.c<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="11"></td><td><pre>AC_CONFIG_HEADERS<span class="token punctuation">(</span><span class="token punctuation">[</span>config.h<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token comment"># Checks for programs.</span></pre></td></tr><tr><td data-num="14"></td><td><pre>AC_PROG_CC</pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token comment"># Checks for libraries.</span></pre></td></tr><tr><td data-num="17"></td><td><pre></pre></td></tr><tr><td data-num="18"></td><td><pre><span class="token comment"># Checks for header files.</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token comment"># Checks for typedefs, structures, and compiler characteristics.</span></pre></td></tr><tr><td data-num="21"></td><td><pre></pre></td></tr><tr><td data-num="22"></td><td><pre><span class="token comment"># Checks for library functions.</span></pre></td></tr><tr><td data-num="23"></td><td><pre></pre></td></tr><tr><td data-num="24"></td><td><pre>AC_OUTPUT</pre></td></tr></table></figure><ul>
-<li>
-<p>AC_PREREQ 声明本文件要求的 autoconf 版本。</p>
+<li><p>使用autoscan扫描当前目录，生成configure.scan文件；可以看到当前目录结构如下：</p>
+<pre><code class="shell">ha@ha-virtual-machine:~/test$ autoscan
+ha@ha-virtual-machine:~/test$ ls
+autoscan.log  configure.scan  main.c
+ha@ha-virtual-machine:~/test$ cat configure.scan
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.71])
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_CONFIG_SRCDIR([main.c])
+AC_CONFIG_HEADERS([config.h])
+
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+AC_OUTPUT
+</code></pre>
+<ul>
+<li><p>AC_PREREQ声明本文件要求的 autoconf 版本。</p>
 </li>
-<li>
-<p>AC_INIT 宏用来定义软件的名称和版本等信息，本例写成：AC_INIT (Hello, 1.0)</p>
+<li><p>AC_INIT 宏用来定义软件的名称和版本等信息，本例写成:AC_INIT(Hello, 1.0)</p>
 </li>
-<li>
-<p>这里省略了 BUG-REPORT-ADDRESS 参数，它是可选项，一般写成作者的邮件地址</p>
+<li><p>这里省略了 BUG-REPORT-ADDRESS 参数，它是可选项，一般写成作者的邮件地址</p>
 </li>
-<li>
-<p>AC_CONFIG_SRCDIR 宏通过侦测所指定的源码文件是否存在，来确定源码目录的有效性。可以选择源码目录中的任何一个文件作为代表，宏参数中使用 `[ ]’，是为了表明其中的字符串是一个整体。</p>
+<li><p>AC_CONFIG_SRCDIR 宏通过侦测所指定的源码文件是否存在，来确定源码目录的有效性。可以选择源码目录中的任何一个文件作为代表, 宏参数中使用 &#96;[ ]’，是为了表明其中的字符串是一个整体。</p>
 </li>
-<li>
-<p>AC_CONFIG_HEADER 宏用于生成 config.h 文件，里面存放 configure 脚本侦测到的信息如果程序需要使用其中的定义，就在源码中加入 #include &lt;config.h&gt;</p>
+<li><p>AC_CONFIG_HEADER 宏用于生成 config.h 文件，里面存放 configure 脚本侦测到的信息如果程序需要使用其中的定义，就在源码中加入#include &lt;config.h&gt;</p>
 </li>
-<li>
-<p>其他的一些宏是标准的侦测过程，<a target="_blank" rel="noopener" href="http://xn--configure-kc6nh8eb8dmgy57ab2eqw1g6j1c.xn--scanconfigure-lo1u.ac">可以保留不动修改 configure.scan 为 configure.ac</a>，同时修改项目编译相关内容；</p>
+<li><p>其他的一些宏是标准的侦测过程，可以保留不动修改configure.scan为configure.ac，同时修改项目编译相关内容；</p>
 </li>
 </ul>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://xn--configure-kj5q.xn--scanconfigure-lo1ux19dgtb0965c.ac">将 configure.scan 重命名为 configure.ac</a>，然后修改其内容，仅需添加 AM_INIT_AUTOMAKE (1.0)；</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#                                               -*- Autoconf -*-</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment"># Process this file with autoconf to produce a configure script.</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre>AC_PREREQ<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2.71</span><span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="5"></td><td><pre>AC_INIT<span class="token punctuation">(</span><span class="token punctuation">[</span>FULL-PACKAGE-NAME<span class="token punctuation">]</span>, <span class="token punctuation">[</span>VERSION<span class="token punctuation">]</span>, <span class="token punctuation">[</span>BUG-REPORT-ADDRESS<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre>AM_INIT_AUTOMAKE<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>AC_CONFIG_SRCDIR<span class="token punctuation">(</span><span class="token punctuation">[</span>main.c<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>AC_CONFIG_HEADERS<span class="token punctuation">(</span><span class="token punctuation">[</span>config.h<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre></pre></td></tr><tr><td data-num="10"></td><td><pre><span class="token comment"># Checks for programs.</span></pre></td></tr><tr><td data-num="11"></td><td><pre>AC_PROG_CC</pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token comment"># Checks for libraries.</span></pre></td></tr><tr><td data-num="14"></td><td><pre></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token comment"># Checks for header files.</span></pre></td></tr><tr><td data-num="16"></td><td><pre></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token comment"># Checks for typedefs, structures, and compiler characteristics.</span></pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token comment"># Checks for library functions.</span></pre></td></tr></table></figure></li>
-<li>
-<p>执行 aclocal；</p>
+<li><p>将configure.scan重命名为configure.ac，然后修改其内容，仅需添加AM_INIT_AUTOMAKE(1.0)；</p>
+<pre><code class="shell">#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.71])
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AM_INIT_AUTOMAKE(1.0)
+AC_CONFIG_SRCDIR([main.c])
+AC_CONFIG_HEADERS([config.h])
+
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+</code></pre>
+</li>
+<li><p>执行aclocal；</p>
 <blockquote>
-<p>autoconf 是 用来生成自动配置软件源代码脚本（configure）的 工具.configure 脚本能独立于 autoconf 运行，且在 运行的 过程中，不需要用户的 干预.<br>
- 要生成 configure 文件，你必须告诉 autoconf 如何找到你所用的 宏。方式是 使用 aclocal 程序来生成你的 aclocal.m4.</p>
-<p>aclocal 根据 configure.in 文件的 内容，自动生成 aclocal.m4 文件.aclocal 是 一个 perl 脚本程序，它的 定义是 ：“aclocal - create aclocal.m4 by scanning <a target="_blank" rel="noopener" href="http://configure.ac">configure.ac</a>”.</p>
+<p>autoconf 是 用来生成自动配置软件源代码脚本（configure）的 工具.configure脚本能独立于autoconf运行,且在 运行的 过程中,不需要用户的 干预.<br>要生成configure文件,你必须告诉autoconf如何找到你所用的 宏.方式是 使用aclocal程序来生成你的 aclocal.m4.</p>
+<p>aclocal根据configure.in文件的 内容,自动生成aclocal.m4文件.aclocal是 一个perl 脚本程序,它的 定义是 ：”aclocal - create aclocal.m4 by scanning configure.ac”.</p>
 </blockquote>
 </li>
-<li>
-<p>执行 autoconf 生成 configure；</p>
+<li><p>执行autoconf生成configure；</p>
 <blockquote>
-<p>autoconf 从 configure.in 这个列举编译软件时所需要各种参数的 模板文件中创建 configure.<br>
-autoconf 需要 GNU m4 宏处理器来处理 aclocal.m4, 生成 configure 脚本.<br>
-m4 是 一个宏处理器。将输入拷贝到输出，同时将宏展开。宏可以是 内嵌的，也可以是 用户定义的。除了可以展开宏，m4 还有一些内建的 函数，用来引用文件，执行命令，整数运算，文本操作，循环等.m4 既可以作为编译器的 前端，也可以单独作为一个宏处理器.</p>
+<p>autoconf从configure.in这个列举编译软件时所需要各种参数的 模板文件中创建configure.<br>autoconf需要GNU m4宏处理器来处理aclocal.m4,生成configure脚本.<br>m4是 一个宏处理器.将输入拷贝到输出,同时将宏展开.宏可以是 内嵌的 ,也可以是 用户定义的 .除了可以展开宏,m4还有一些内建的 函数,用来引用文件,执行命令,整数运算,文本操作,循环等.m4既可以作为编译器的 前端,也可以单独作为一个宏处理器.</p>
 </blockquote>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://xn--autoheaderconfig-rv06ap7bx12r3e0d.h.in">执行 autoheader 生成 config.h.in</a>；</p>
+<li><p>执行autoheader生成config.h.in；</p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://xn--Makfile-ri9k7oi5bu48dri7gr92a88f.am">将编译规则写入 Makfile.am</a>；</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token assign-left variable">AUTOMAKE_OPTIONS</span><span class="token operator">=</span>foreign</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token assign-left variable">bin_PROGRAMS</span><span class="token operator">=</span>test</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token assign-left variable">test_SOURCES</span><span class="token operator">=</span>main.c</pre></td></tr></table></figure></li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://xn--automakeMakefile-pv06ar7bv12r5e0d.in">执行 automake 生成 Makefile.in</a>;</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>automake --add-missing</pre></td></tr></table></figure><blockquote>
-<p>automake 会根据你写的 <a target="_blank" rel="noopener" href="http://Makefile.xn--amMakefile-e42q629l7qowk9bsd2b.in">Makefile.am 来自动生成 Makefile.in</a>.<br>
-Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代码。例如，宏 bin_PROGRAMS 将导致编译和连接的 目标被生成.</p>
+<li><p>将编译规则写入Makfile.am；</p>
+<pre><code class="shell">AUTOMAKE_OPTIONS=foreign
+bin_PROGRAMS=test
+test_SOURCES=main.c
+</code></pre>
+</li>
+<li><p>执行automake生成Makefile.in;</p>
+<pre><code class="shell">automake --add-missing
+</code></pre>
+<blockquote>
+<p>automake会根据你写的 Makefile.am来自动生成Makefile.in.<br>Makefile.am中定义的 宏和目标,会指导automake生成指定的 代码.例如,宏bin_PROGRAMS将导致编译和连接的 目标被生成.</p>
 </blockquote>
 </li>
-<li>
-<p>最终当你执行 configure 时会根据 Makefile.in 生成 Makefile；</p>
+<li><p>最终当你执行configure时会根据Makefile.in生成Makefile；</p>
 </li>
 </ol>
-<h1 id="reference"><a class="markdownIt-Anchor" href="#reference">#</a> reference</h1>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_22660775/article/details/88975529">https://blog.csdn.net/qq_22660775/article/details/88975529</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.laruence.com/2009/11/18/1154.htmls">https://www.laruence.com/2009/11/18/1154.htmls</a></li>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyNjYwNzc1L2FydGljbGUvZGV0YWlscy84ODk3NTUyOQ==">https://blog.csdn.net/qq_22660775/article/details/88975529</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGFydWVuY2UuY29tLzIwMDkvMTEvMTgvMTE1NC5odG1scw==">https://www.laruence.com/2009/11/18/1154.htmls</span></li>
 </ol>
 
       <div class="tags">
@@ -313,7 +356,7 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   </li>
   <li class="link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/" title="autoconf 使用">http://example.com/2022/07/29/autoconf使用/</a>
+    <a href="http://growdu.online/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/" title="autoconf 使用">http://growdu.online/2022/07/29/autoconf使用/</a>
   </li>
   <li class="license">
     <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -332,7 +375,7 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
     <div class="item left">
       
 
-  <a href="/2022/07/29/zookeeper%E4%B8%BB%E5%A4%87%E9%9B%86%E7%BE%A4demo/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclxfdlttj20zk0m8npd.jpg" title="zookeeper主备集群demo">
+  <a href="/2022/07/29/zookeeper%E4%B8%BB%E5%A4%87%E9%9B%86%E7%BE%A4demo/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="zookeeper主备集群demo">
   <span class="type">上一篇</span>
   <span class="category"><i class="ic i-flag"></i> 分布式</span>
   <h3>zookeeper主备集群demo</h3>
@@ -342,7 +385,7 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
     <div class="item right">
       
 
-  <a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciundwu5j20zk0m8n9e.jpg" title="变长数组（柔性数组）">
+  <a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclg5ms2rj20zk0m8u0x.jpg" title="变长数组（柔性数组）">
   <span class="type">下一篇</span>
   <span class="category"><i class="ic i-flag"></i> c</span>
   <h3>变长数组（柔性数组）</h3>
@@ -364,7 +407,7 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#autoconf%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> autoconf 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> 使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">2.</span> <span class="toc-text"> reference</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#autoconf%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">autoconf使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">2.</span> <span class="toc-text">reference</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
         <ul>
@@ -483,26 +526,6 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/docker/" title="分类于 docker">docker</a>
-</div>
-
-    <span><a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" title="docker与宿主机共享内存通信">docker与宿主机共享内存通信</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/database/" title="分类于 database">database</a>
-</div>
-
-    <span><a href="/2022/07/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%97%E6%8A%98%E6%96%AD%EF%BC%89/" title="数据库数据完整性问题（块折断）">数据库数据完整性问题（块折断）</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 <a href="/categories/vpp/" title="分类于 vpp">vpp</a>
 </div>
 
@@ -513,10 +536,10 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" title="分类于 分布式">分布式</a>
+<a href="/categories/docker/" title="分类于 docker">docker</a>
 </div>
 
-    <span><a href="/2022/07/29/zookeeper%E4%B8%BB%E5%A4%87%E9%9B%86%E7%BE%A4demo/" title="zookeeper主备集群demo">zookeeper主备集群demo</a></span>
+    <span><a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" title="docker与宿主机共享内存通信">docker与宿主机共享内存通信</a></span>
   </li>
 
       
@@ -533,10 +556,20 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/c/" title="分类于 c">c</a>
+<a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" title="分类于 分布式">分布式</a>
 </div>
 
-    <span><a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" title="变长数组（柔性数组）">变长数组（柔性数组）</a></span>
+    <span><a href="/2022/07/29/zookeeper%E4%B8%BB%E5%A4%87%E9%9B%86%E7%BE%A4demo/" title="zookeeper主备集群demo">zookeeper主备集群demo</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/database/" title="分类于 database">database</a>
+</div>
+
+    <span><a href="/2022/07/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%97%E6%8A%98%E6%96%AD%EF%BC%89/" title="数据库数据完整性问题（块折断）">数据库数据完整性问题（块折断）</a></span>
   </li>
 
       
@@ -553,16 +586,6 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="分类于 环境搭建">环境搭建</a>
-</div>
-
-    <span><a href="/2022/07/26/use-code-server/" title="use-code-server">use-code-server</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 <a href="/categories/tcp/" title="分类于 tcp">tcp</a>
 </div>
 
@@ -573,10 +596,30 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/c/" title="分类于 c">c</a>
+</div>
+
+    <span><a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" title="变长数组（柔性数组）">变长数组（柔性数组）</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/dpdk/" title="分类于 dpdk">dpdk</a>
 </div>
 
     <span><a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">dpdk_kni_use</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="分类于 环境搭建">环境搭建</a>
+</div>
+
+    <span><a href="/2022/07/26/use-code-server/" title="use-code-server">use-code-server</a></span>
   </li>
 
   </ul>
@@ -601,13 +644,13 @@ Makefile.am 中定义的 宏和目标，会指导 automake 生成指定的 代�
     <span class="post-meta-item-icon">
       <i class="ic i-chart-area"></i>
     </span>
-    <span title="站点总字数">32k 字</span>
+    <span title="站点总字数">33k 字</span>
 
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="ic i-coffee"></i>
     </span>
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   </div>
   <div class="powered-by">
     基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>

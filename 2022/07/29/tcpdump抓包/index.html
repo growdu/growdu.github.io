@@ -15,9 +15,9 @@
   <meta http-equiv="Cache-Control" content="no-siteapp">
 
 
-<link rel="alternate" type="application/rss+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/atom.xml" />
-<link rel="alternate" type="application/json" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://example.com/feed.json" />
+<link rel="alternate" type="application/rss+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/atom.xml" />
+<link rel="alternate" type="application/json" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/feed.json" />
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
@@ -27,7 +27,7 @@
   <meta name="keywords" content="linux,tcp,socket" />
 
 
-<link rel="canonical" href="http://example.com/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/">
+<link rel="canonical" href="http://growdu.online/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/">
 
 
 
@@ -76,7 +76,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
       <i class="ic i-pen"></i>
     </span>
     <span class="text">本文字数</span>
-    <span>2.3k</span>
+    <span>2.5k</span>
     <span class="text">字</span>
   </span>
   <span class="item" title="阅读时长">
@@ -117,12 +117,12 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclffsa1cj20zk0m811l.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexj2jgzj20zk0m8b09.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclxp31goj20zk0m8qv5.jpg"></li>
         </ul>
       </div>
     </header>
@@ -153,7 +153,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
-  <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/">
+  <link itemprop="mainEntityOfPage" href="http://growdu.online/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -168,39 +168,107 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="抓包进阶"><a class="markdownIt-Anchor" href="#抓包进阶">#</a> 抓包进阶</h1>
-<h2 id="抓包命令"><a class="markdownIt-Anchor" href="#抓包命令">#</a> 抓包命令</h2>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>tcpdump -i eth1 -vvv -w test.pcap</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment"># -i 指定网口</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># -vvv 在 shell 中显示抓到的包</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment"># -w 将抓到的包写入文件</span></pre></td></tr></table></figure><ul>
-<li>
-<p>指定主机名</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>tcpdump -i eth1 <span class="token function">host</span> www.baidu.com</pre></td></tr></table></figure></li>
-<li>
-<p>指定 ip</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>tcpdump -i eth1 <span class="token function">host</span> <span class="token number">192.168</span>.1.12</pre></td></tr></table></figure></li>
-<li>
-<p>指定端口</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>tcpdump -i eth1 port <span class="token number">80</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token comment"># 指定源端口</span></pre></td></tr><tr><td data-num="3"></td><td><pre> tcpdump -i eth1 src port <span class="token number">80</span></pre></td></tr><tr><td data-num="4"></td><td><pre> <span class="token comment"># 指定目的端口</span></pre></td></tr><tr><td data-num="5"></td><td><pre> tcpdump -i eth1 dst port <span class="token number">80</span></pre></td></tr></table></figure></li>
-<li>
-<p>指定协议</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 对于传输层之上的协议需加 port</span></pre></td></tr><tr><td data-num="2"></td><td><pre> tcpdump -i eth1 port http</pre></td></tr></table></figure></li>
-<li>
-<p>指定 icmp</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># ping 打包</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token function">ping</span> -s <span class="token number">4800</span> <span class="token function">ip</span></pre></td></tr><tr><td data-num="3"></td><td><pre> <span class="token comment"># 抓取 ping 包</span></pre></td></tr><tr><td data-num="4"></td><td><pre> <span class="token comment"># 传输层及传输层之下的协议直接跟协议名</span></pre></td></tr><tr><td data-num="5"></td><td><pre> tcpdump -i eth1 icmp</pre></td></tr></table></figure></li>
-<li>
-<p>当需要长时间抓包时，为避免单个抓包文件过大导致打开查询缓慢，可设置当个抓包文件大小</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># 指定单个抓包文件大小为 100M，超过 100M 会保存在新文件中</span></pre></td></tr><tr><td data-num="2"></td><td><pre>tcpdump -i eth1 -C 100M -w test.pcap</pre></td></tr></table></figure></li>
+    <h1 id="抓包进阶"><a href="#抓包进阶" class="headerlink" title="抓包进阶"></a>抓包进阶</h1><h2 id="抓包命令"><a href="#抓包命令" class="headerlink" title="抓包命令"></a>抓包命令</h2><pre><code class="shell">tcpdump -i eth1 -vvv -w test.pcap
+# -i 指定网口
+# -vvv 在shell中显示抓到的包
+# -w 将抓到的包写入文件
+</code></pre>
+<ul>
+<li><p>指定主机名</p>
+<pre><code class="shell">tcpdump -i eth1 host www.baidu.com
+</code></pre>
+</li>
+<li><p>指定ip</p>
+<pre><code class="shell"> tcpdump -i eth1 host 192.168.1.12
+</code></pre>
+</li>
+<li><p>指定端口</p>
+<pre><code class="shell"> tcpdump -i eth1 port 80
+ # 指定源端口
+ tcpdump -i eth1 src port 80
+ # 指定目的端口
+ tcpdump -i eth1 dst port 80
+</code></pre>
+</li>
+<li><p>指定协议</p>
+<pre><code class="shell"> # 对于传输层之上的协议需加port
+ tcpdump -i eth1 port http
+</code></pre>
+</li>
+<li><p>指定icmp</p>
+<pre><code class="shell"> # ping打包
+ ping -s 4800 ip
+ # 抓取ping包
+ # 传输层及传输层之下的协议直接跟协议名
+ tcpdump -i eth1 icmp
+</code></pre>
+</li>
+<li><p>当需要长时间抓包时，为避免单个抓包文件过大导致打开查询缓慢，可设置当个抓包文件大小</p>
+<pre><code class="shell"># 指定单个抓包文件大小为100M，超过100M会保存在新文件中
+tcpdump -i eth1 -C 100M -w test.pcap
+</code></pre>
+</li>
 </ul>
-<h2 id="拆分包"><a class="markdownIt-Anchor" href="#拆分包">#</a> 拆分包</h2>
-<p>当单个文件报文个数过多时，打开和查询报文缓慢。可以使用 wireshark 相关工具对其进行拆分。</p>
-<p>进入 wireshark 的安装目录，可以看到有一个 editcap 的程序。</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># -c 指定多少个包拆分为一个文件， src 待拆分的包文件路径及文件名，dst 是拆分后的文件路径及文件名</span></pre></td></tr><tr><td data-num="2"></td><td><pre>editcap.exe -c <span class="token number">200000</span> src dst</pre></td></tr></table></figure><h2 id="合并包"><a class="markdownIt-Anchor" href="#合并包">#</a> 合并包</h2>
-<p>Mergecap 从名字上 可以看出该命令的功能是合并多个报文为一个报文。</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>C:<span class="token punctuation">\</span>Program Files<span class="token punctuation">\</span>Wireshark<span class="token operator">></span>mergecap -h</pre></td></tr><tr><td data-num="2"></td><td><pre>Mergecap <span class="token punctuation">(</span>Wireshark<span class="token punctuation">)</span> <span class="token number">3.4</span>.2 <span class="token punctuation">(</span>v3.4.2-0-ga889cf1b1bf9<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>Merge two or <span class="token function">more</span> capture files into one.</pre></td></tr><tr><td data-num="4"></td><td><pre>See https://www.wireshark.org <span class="token keyword">for</span> <span class="token function">more</span> information.</pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>Usage: mergecap <span class="token punctuation">[</span>options<span class="token punctuation">]</span> -w <span class="token operator">&lt;</span>outfile<span class="token operator">>|</span>- <span class="token operator">&lt;</span>infile<span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">&lt;</span>infile<span class="token operator">></span> <span class="token punctuation">..</span>.<span class="token punctuation">]</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>Output:</pre></td></tr><tr><td data-num="9"></td><td><pre>  -a                concatenate rather than merge files.</pre></td></tr><tr><td data-num="10"></td><td><pre>                    default is to merge based on frame timestamps.</pre></td></tr><tr><td data-num="11"></td><td><pre>  -s <span class="token operator">&lt;</span>snaplen<span class="token operator">></span>      truncate packets to <span class="token operator">&lt;</span>snaplen<span class="token operator">></span> bytes of data.</pre></td></tr><tr><td data-num="12"></td><td><pre>  -w <span class="token operator">&lt;</span>outfile<span class="token operator">>|</span>-    <span class="token builtin class-name">set</span> the output filename to <span class="token operator">&lt;</span>outfile<span class="token operator">></span> or <span class="token string">'-'</span> <span class="token keyword">for</span> stdout.</pre></td></tr><tr><td data-num="13"></td><td><pre>  -F <span class="token operator">&lt;</span>capture type<span class="token operator">></span> <span class="token builtin class-name">set</span> the output <span class="token function">file</span> <span class="token builtin class-name">type</span><span class="token punctuation">;</span> default is pcapng.</pre></td></tr><tr><td data-num="14"></td><td><pre>                    an empty <span class="token string">"-F"</span> option will list the <span class="token function">file</span> types.</pre></td></tr><tr><td data-num="15"></td><td><pre>  -I <span class="token operator">&lt;</span>IDB merge mode<span class="token operator">></span> <span class="token builtin class-name">set</span> the merge mode <span class="token keyword">for</span> Interface Description Blocks<span class="token punctuation">;</span> default is <span class="token string">'all'</span><span class="token builtin class-name">.</span></pre></td></tr><tr><td data-num="16"></td><td><pre>                    an empty <span class="token string">"-I"</span> option will list the merge modes.</pre></td></tr><tr><td data-num="17"></td><td><pre></pre></td></tr><tr><td data-num="18"></td><td><pre>Miscellaneous:</pre></td></tr><tr><td data-num="19"></td><td><pre>  -h                display this <span class="token builtin class-name">help</span> and exit.</pre></td></tr><tr><td data-num="20"></td><td><pre>  -v                verbose output.</pre></td></tr></table></figure><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>mergecap -v -a -F pcap -w test.pcap</pre></td></tr><tr><td data-num="2"></td><td><pre>mergecap -v -a userip-1.pcap userip-2.pcap -F pcap -w merge_out.pcap</pre></td></tr><tr><td data-num="3"></td><td><pre>    -v参数表示打印每一片报文的编号，报文较多的话会打屏。</pre></td></tr><tr><td data-num="4"></td><td><pre>    -a参数表示的是按照文件中顺序将报文进行合并，默认情况是按照时间戳的顺序进行合并。由于每一片报文头部都是由有时间戳信息的，不明白的可以查看这里。</pre></td></tr><tr><td data-num="5"></td><td><pre>    -F表示文件的存储格式，例如pcap,pcapng等等。在-F后面参数为空的情况下，会列出该命令支持的所有文件格式，对照选择即可。</pre></td></tr><tr><td data-num="6"></td><td><pre>    -w即文件输出的</pre></td></tr></table></figure><h2 id="合并一定比例的包"><a class="markdownIt-Anchor" href="#合并一定比例的包">#</a> 合并一定比例的包</h2>
-<p>使用 python 脚本构造固定比例的包，如 1:1024 等。</p>
-<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">import</span> os</pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre>base_file <span class="token operator">=</span> <span class="token string">"5gc.pcap"</span></pre></td></tr><tr><td data-num="4"></td><td><pre>arp_file <span class="token operator">=</span> <span class="token string">"arp_request.pcap"</span></pre></td></tr><tr><td data-num="5"></td><td><pre>ratio <span class="token operator">=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="6"></td><td><pre>dst_file <span class="token operator">=</span> <span class="token string">""</span></pre></td></tr><tr><td data-num="7"></td><td><pre>pwd <span class="token operator">=</span> os<span class="token punctuation">.</span>curdir</pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">for</span> num <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    ratio <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>num<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    copy_file <span class="token operator">=</span> <span class="token string">"5gc_copy_"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">".pcap"</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'copy %s %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>base_file<span class="token punctuation">,</span> copy_file<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    dst_file <span class="token operator">=</span> <span class="token string">"5gc_"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>ratio<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">".pcap"</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"mergecap.exe -v -a %s %s -F pcap -w %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>base_file<span class="token punctuation">,</span> copy_file<span class="token punctuation">,</span> dst_file<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    base_file <span class="token operator">=</span> dst_file</pre></td></tr><tr><td data-num="15"></td><td><pre>    dst_arp_file <span class="token operator">=</span> <span class="token string">"5gc_arp_1_"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>ratio<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">".pcap"</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"mergecap.exe -v -a %s %s -F pcap -w %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>base_file<span class="token punctuation">,</span> arp_file<span class="token punctuation">,</span> dst_arp_file<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h2 id="查询包"><a class="markdownIt-Anchor" href="#查询包">#</a> 查询包</h2>
-<p>一般获取抓包文件后，需要使用 wireshark 对包进行查询和分析。常见的查询命令如下：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>tcp <span class="token comment"># 过滤 tcp 报文</span></pre></td></tr><tr><td data-num="2"></td><td><pre>ip.addr <span class="token operator">==</span> <span class="token number">127.0</span>.0.1 <span class="token comment"># 根据 ip 地址过滤</span></pre></td></tr><tr><td data-num="3"></td><td><pre>tcp.flags.reset <span class="token operator">==</span> <span class="token number">1</span> <span class="token comment"># 过滤 reset 报文</span></pre></td></tr><tr><td data-num="4"></td><td><pre>tcp.port <span class="token operator">==</span> <span class="token number">8080</span> <span class="token comment"># 根据端口过滤</span></pre></td></tr><tr><td data-num="5"></td><td><pre>tcp.len <span class="token operator">></span> <span class="token number">0</span> <span class="token comment"># 根据 tcp 数据长度过滤</span></pre></td></tr></table></figure><h1 id="reference"><a class="markdownIt-Anchor" href="#reference">#</a> reference</h1>
-<p>1.<a target="_blank" rel="noopener" href="https://www.freesion.com/article/9386244731/">https://www.freesion.com/article/9386244731/</a></p>
+<h2 id="拆分包"><a href="#拆分包" class="headerlink" title="拆分包"></a>拆分包</h2><p>当单个文件报文个数过多时，打开和查询报文缓慢。可以使用wireshark相关工具对其进行拆分。</p>
+<p>进入wireshark的安装目录，可以看到有一个editcap的程序。</p>
+<pre><code class="shell"># -c 指定多少个包拆分为一个文件， src待拆分的包文件路径及文件名，dst是拆分后的文件路径及文件名
+editcap.exe -c 200000 src dst
+</code></pre>
+<h2 id="合并包"><a href="#合并包" class="headerlink" title="合并包"></a>合并包</h2><p>Mergecap 从名字上 可以看出该命令的功能是合并多个报文为一个报文。</p>
+<pre><code class="shell">C:\Program Files\Wireshark&gt;mergecap -h
+Mergecap (Wireshark) 3.4.2 (v3.4.2-0-ga889cf1b1bf9)
+Merge two or more capture files into one.
+See https://www.wireshark.org for more information.
+
+Usage: mergecap [options] -w &lt;outfile&gt;|- &lt;infile&gt; [&lt;infile&gt; ...]
+
+Output:
+  -a                concatenate rather than merge files.
+                    default is to merge based on frame timestamps.
+  -s &lt;snaplen&gt;      truncate packets to &lt;snaplen&gt; bytes of data.
+  -w &lt;outfile&gt;|-    set the output filename to &lt;outfile&gt; or &#39;-&#39; for stdout.
+  -F &lt;capture type&gt; set the output file type; default is pcapng.
+                    an empty &quot;-F&quot; option will list the file types.
+  -I &lt;IDB merge mode&gt; set the merge mode for Interface Description Blocks; default is &#39;all&#39;.
+                    an empty &quot;-I&quot; option will list the merge modes.
+
+Miscellaneous:
+  -h                display this help and exit.
+  -v                verbose output.
+</code></pre>
+<pre><code class="shell">mergecap -v -a -F pcap -w test.pcap
+mergecap -v -a userip-1.pcap userip-2.pcap -F pcap -w merge_out.pcap
+    -v参数表示打印每一片报文的编号，报文较多的话会打屏。
+    -a参数表示的是按照文件中顺序将报文进行合并，默认情况是按照时间戳的顺序进行合并。由于每一片报文头部都是由有时间戳信息的，不明白的可以查看这里。
+    -F表示文件的存储格式，例如pcap,pcapng等等。在-F后面参数为空的情况下，会列出该命令支持的所有文件格式，对照选择即可。
+    -w即文件输出的
+</code></pre>
+<h2 id="合并一定比例的包"><a href="#合并一定比例的包" class="headerlink" title="合并一定比例的包"></a>合并一定比例的包</h2><p>使用python脚本构造固定比例的包，如1:1024等。</p>
+<pre><code class="python">import os
+
+base_file = &quot;5gc.pcap&quot;
+arp_file = &quot;arp_request.pcap&quot;
+ratio = 0
+dst_file = &quot;&quot;
+pwd = os.curdir
+for num in range(2,20):
+    ratio = pow(2,num)
+    copy_file = &quot;5gc_copy_&quot; + str(num) + &quot;.pcap&quot;
+    os.system(&#39;copy %s %s&#39; % (base_file, copy_file))
+    dst_file = &quot;5gc_&quot; + str(ratio) + &quot;.pcap&quot;
+    os.system(&quot;mergecap.exe -v -a %s %s -F pcap -w %s&quot; % (base_file, copy_file, dst_file))
+    base_file = dst_file
+    dst_arp_file = &quot;5gc_arp_1_&quot; + str(ratio) + &quot;.pcap&quot;
+    os.system(&quot;mergecap.exe -v -a %s %s -F pcap -w %s&quot; % (base_file, arp_file, dst_arp_file))
+</code></pre>
+<h2 id="查询包"><a href="#查询包" class="headerlink" title="查询包"></a>查询包</h2><p>一般获取抓包文件后，需要使用wireshark对包进行查询和分析。常见的查询命令如下：</p>
+<pre><code class="shell">tcp # 过滤tcp报文
+ip.addr == 127.0.0.1 # 根据ip地址过滤
+tcp.flags.reset == 1 # 过滤reset报文
+tcp.port == 8080 # 根据端口过滤
+tcp.len &gt; 0 # 根据tcp数据长度过滤
+</code></pre>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p>1.<span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZXNpb24uY29tL2FydGljbGUvOTM4NjI0NDczMS8=">https://www.freesion.com/article/9386244731/</span></p>
 
       <div class="tags">
           <a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
@@ -261,7 +329,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   </li>
   <li class="link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/" title="tcpdump 抓包">http://example.com/2022/07/29/tcpdump抓包/</a>
+    <a href="http://growdu.online/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/" title="tcpdump 抓包">http://growdu.online/2022/07/29/tcpdump抓包/</a>
   </li>
   <li class="license">
     <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -280,7 +348,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
     <div class="item left">
       
 
-  <a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciusoyjnj219g0u0x56.jpg" title="变长数组（柔性数组）">
+  <a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliwyw55j20zk0m8hdt.jpg" title="变长数组（柔性数组）">
   <span class="type">上一篇</span>
   <span class="category"><i class="ic i-flag"></i> c</span>
   <h3>变长数组（柔性数组）</h3>
@@ -290,7 +358,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
     <div class="item right">
       
 
-  <a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclwrdwyaj20zk0m8are.jpg" title="docker与宿主机共享内存通信">
+  <a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitzannuj20zk0m8b29.jpg" title="docker与宿主机共享内存通信">
   <span class="type">下一篇</span>
   <span class="category"><i class="ic i-flag"></i> docker</span>
   <h3>docker与宿主机共享内存通信</h3>
@@ -312,7 +380,7 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%93%E5%8C%85%E8%BF%9B%E9%98%B6"><span class="toc-number">1.</span> <span class="toc-text"> 抓包进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%93%E5%8C%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 抓包命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%86%E5%88%86%E5%8C%85"><span class="toc-number">1.2.</span> <span class="toc-text"> 拆分包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%8C%85"><span class="toc-number">1.3.</span> <span class="toc-text"> 合并包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E7%9A%84%E5%8C%85"><span class="toc-number">1.4.</span> <span class="toc-text"> 合并一定比例的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8C%85"><span class="toc-number">1.5.</span> <span class="toc-text"> 查询包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">2.</span> <span class="toc-text"> reference</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%93%E5%8C%85%E8%BF%9B%E9%98%B6"><span class="toc-number">1.</span> <span class="toc-text">抓包进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%93%E5%8C%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">抓包命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%86%E5%88%86%E5%8C%85"><span class="toc-number">1.2.</span> <span class="toc-text">拆分包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%8C%85"><span class="toc-number">1.3.</span> <span class="toc-text">合并包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E7%9A%84%E5%8C%85"><span class="toc-number">1.4.</span> <span class="toc-text">合并一定比例的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8C%85"><span class="toc-number">1.5.</span> <span class="toc-text">查询包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">2.</span> <span class="toc-text">reference</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
         <ul>
@@ -431,16 +499,6 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/c/" title="分类于 c">c</a>
-</div>
-
-    <span><a href="/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/" title="autoconf使用">autoconf使用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 <a href="/categories/tcp/" title="分类于 tcp">tcp</a>
 </div>
 
@@ -451,50 +509,10 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/docker/" title="分类于 docker">docker</a>
+<a href="/categories/database/" title="分类于 database">database</a>
 </div>
 
-    <span><a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" title="docker与宿主机共享内存通信">docker与宿主机共享内存通信</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="分类于 环境搭建">环境搭建</a>
-</div>
-
-    <span><a href="/2022/07/26/use-code-server/" title="use-code-server">use-code-server</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/vpp/" title="分类于 vpp">vpp</a>
-</div>
-
-    <span><a href="/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="vpp开发指南">vpp开发指南</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/dpdk/" title="分类于 dpdk">dpdk</a>
-</div>
-
-    <span><a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">dpdk_kni_use</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/c/" title="分类于 c">c</a>
-</div>
-
-    <span><a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" title="变长数组（柔性数组）">变长数组（柔性数组）</a></span>
+    <span><a href="/2022/07/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%97%E6%8A%98%E6%96%AD%EF%BC%89/" title="数据库数据完整性问题（块折断）">数据库数据完整性问题（块折断）</a></span>
   </li>
 
       
@@ -511,6 +529,26 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="分类于 环境搭建">环境搭建</a>
+</div>
+
+    <span><a href="/2022/07/26/use-code-server/" title="use-code-server">use-code-server</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/c/" title="分类于 c">c</a>
+</div>
+
+    <span><a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" title="变长数组（柔性数组）">变长数组（柔性数组）</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/tcp/" title="分类于 tcp">tcp</a>
 </div>
 
@@ -521,10 +559,40 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/database/" title="分类于 database">database</a>
+<a href="/categories/c/" title="分类于 c">c</a>
 </div>
 
-    <span><a href="/2022/07/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%97%E6%8A%98%E6%96%AD%EF%BC%89/" title="数据库数据完整性问题（块折断）">数据库数据完整性问题（块折断）</a></span>
+    <span><a href="/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/" title="autoconf使用">autoconf使用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/docker/" title="分类于 docker">docker</a>
+</div>
+
+    <span><a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" title="docker与宿主机共享内存通信">docker与宿主机共享内存通信</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/dpdk/" title="分类于 dpdk">dpdk</a>
+</div>
+
+    <span><a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">dpdk_kni_use</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/vpp/" title="分类于 vpp">vpp</a>
+</div>
+
+    <span><a href="/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="vpp开发指南">vpp开发指南</a></span>
   </li>
 
   </ul>
@@ -549,13 +617,13 @@ growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，�
     <span class="post-meta-item-icon">
       <i class="ic i-chart-area"></i>
     </span>
-    <span title="站点总字数">32k 字</span>
+    <span title="站点总字数">33k 字</span>
 
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="ic i-coffee"></i>
     </span>
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   </div>
   <div class="powered-by">
     基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
