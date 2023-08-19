@@ -1,641 +1,1689 @@
-
-
-
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="zh-CN">
+
+
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <meta charset="utf-8">
+    <meta name="keywords" content="dpdk_kni_use, growdu&#39;s blog">
+    <meta name="description" content="dpdk之kni使用什么是kni
+Kni(Kernel NIC Interface)内核网卡接口，是DPDK允许用户态和内核态交换报文的解决方案，模拟了一个虚拟的网口，提供dpdk的应用程序和linux内核之间通讯。kni接口允许报文从用户">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <title>dpdk_kni_use | growdu&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
 
 
-<link rel="alternate" type="application/rss+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/atom.xml" />
-<link rel="alternate" type="application/json" title="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。" href="http://growdu.online/feed.json" />
+    <!-- bg-cover style     -->
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">growdu&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
   
-  <meta name="keywords" content="dpdk,kni,linux" />
-
-
-<link rel="canonical" href="http://growdu.online/2022/07/26/dpdk-kni-use/">
-
-
-
-  <title>
-dpdk_kni_use - dpdk |
-growdu = 人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。</title>
-<meta name="generator" content="Hexo 6.2.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-  <h1 itemprop="name headline">dpdk_kni_use
-  </h1>
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
   
-<div class="meta">
-  <span class="item" title="创建时间：2022-07-26 16:55:56">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <span class="text">发表于</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-07-26T16:55:56+08:00">2022-07-26</time>
-  </span>
-  <span class="item" title="本文字数">
-    <span class="icon">
-      <i class="ic i-pen"></i>
-    </span>
-    <span class="text">本文字数</span>
-    <span>6.8k</span>
-    <span class="text">字</span>
-  </span>
-  <span class="item" title="阅读时长">
-    <span class="icon">
-      <i class="ic i-clock"></i>
-    </span>
-    <span class="text">阅读时长</span>
-    <span>6 分钟</span>
-  </span>
-</div>
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
 
 
-          </div>
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">growdu&#39;s blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
         </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="切换导航栏">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">growdu</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
-  </div>
-</nav>
 
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
-    </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
           
-  <div class="article wrap">
-    
-<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-<i class="ic i-home"></i>
-<span><a href="/">首页</a></span><i class="ic i-angle-right"></i>
-<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/dpdk/" itemprop="item" rel="index" title="分类于 dpdk"><span itemprop="name">dpdk</span></a>
-<meta itemprop="position" content="1" /></span>
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
-    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
-  <link itemprop="mainEntityOfPage" href="http://growdu.online/2022/07/26/dpdk-kni-use/">
 
-  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="image" content="/images/avatar.jpg">
-    <meta itemprop="name" content="growdu">
-    <meta itemprop="description" content=", ">
-  </span>
+        </div>
 
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。">
-  </span>
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
 
-  <div class="body md" itemprop="articleBody">
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
     
 
-    <h1 id="dpdk之kni使用"><a class="markdownIt-Anchor" href="#dpdk之kni使用">#</a> dpdk 之 kni 使用</h1>
-<h2 id="什么是kni"><a class="markdownIt-Anchor" href="#什么是kni">#</a> 什么是 kni</h2>
-<blockquote>
-<p>Kni (Kernel NIC Interface) 内核网卡接口，是 DPDK 允许用户态和内核态交换报文的解决方案，模拟了一个虚拟的网口，提供 dpdk 的应用程序和 linux 内核之间通讯。kni 接口允许报文从用户态接收后转发到 linu 协议栈去。 为什么要弄一个 kni 接口，虽然 dpdk 的高速转发性能很出色，但是也有自己的一些缺点，比如没有协议栈就是其中一项缺陷，当然也可能当时设计时就将没有将协议栈考虑进去，毕竟协议栈需要将报文转发处理，可能会使处理报文的能力大大降低。</p>
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">dpdk_kni_use</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/linux/">
+                                <span class="chip bg-color">linux</span>
+                            </a>
+                        
+                            <a href="/tags/dpdk/">
+                                <span class="chip bg-color">dpdk</span>
+                            </a>
+                        
+                            <a href="/tags/kni/">
+                                <span class="chip bg-color">kni</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/dpdk/" class="post-category">
+                                dpdk
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-26
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="dpdk之kni使用"><a href="#dpdk之kni使用" class="headerlink" title="dpdk之kni使用"></a>dpdk之kni使用</h1><h2 id="什么是kni"><a href="#什么是kni" class="headerlink" title="什么是kni"></a>什么是kni</h2><blockquote>
+<p>Kni(Kernel NIC Interface)内核网卡接口，是DPDK允许用户态和内核态交换报文的解决方案，模拟了一个虚拟的网口，提供dpdk的应用程序和linux内核之间通讯。kni接口允许报文从用户态接收后转发到linu协议栈去。 为什么要弄一个kni接口，虽然dpdk的高速转发性能很出色，但是也有自己的一些缺点，比如没有协议栈就是其中一项缺陷，当然也可能当时设计时就将没有将协议栈考虑进去，毕竟协议栈需要将报文转发处理，可能会使处理报文的能力大大降低。</p>
 </blockquote>
 <blockquote>
-<p>当 kni 向 linux 发送报文时通过调用 netif_rx () 将报文送入 linux 协议栈，这其中需要将 dpdk 的 mbuf 转换成 skb_buf。</p>
+<p>当kni向linux发送报文时通过调用netif_rx()将报文送入linux协议栈，这其中需要将dpdk的mbuf转换成skb_buf。</p>
 </blockquote>
 <blockquote>
-<p>当 linux 向 kni 端口发送报文时，调用回调函数 kni_net_tx ()，然后报文经过转换之后发送到端口上。</p>
+<p>当linux向kni端口发送报文时，调用回调函数kni_net_tx()，然后报文经过转换之后发送到端口上。</p>
 </blockquote>
-<h3 id="kni优势"><a class="markdownIt-Anchor" href="#kni优势">#</a> kni 优势</h3>
-<ul>
-<li>相较现存的 Linux TUN/TAP 接口更快的速度（消除了系统调用以及 copy_to_user ()/copy_from_user () 内存拷贝的消耗）</li>
-<li>允许标准 Linux 网络工具管理 DPDK 接口，如 ethtool, ifconfig 和 tcpdump</li>
+<h3 id="kni优势"><a href="#kni优势" class="headerlink" title="kni优势"></a>kni优势</h3><ul>
+<li>相较现存的Linux TUN&#x2F;TAP接口更快的速度（消除了系统调用以及copy_to_user()&#x2F;copy_from_user()内存拷贝的消耗）</li>
+<li>允许标准Linux网络工具管理DPDK接口，如ethtool, ifconfig 和 tcpdump</li>
 <li>提供到内核协议栈接口</li>
 </ul>
-<h2 id="kni代码分析"><a class="markdownIt-Anchor" href="#kni代码分析">#</a> kni 代码分析</h2>
-<p>和 igb uio 模块一样，kni 模块分成内核以及用户态代码，内核模块在编译出来之后为 rte_kni.ko，首先插入内核，dpdk 提供了一个用户态的例子。首先看下 kni 内核模块代码，在 kni_misc.c 中，ko 代码入口为</p>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">module_init</span><span class="token punctuation">(</span>kni_init<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>首先选择 kni 的线程模式，分为单线程还是多线程，所谓单线程是指所有的 kni 端口收发都由一个线程守护，多线程只是每一个 kni 端口分为由一个线程守护，这部分是在插入模块时带入参数选择。 接着调用注册函数 misc_register，将 kni 注册为一个混杂设备。其中 kni_misc 结构体里面定义了该混杂设备的一些操作：</p>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">miscdevice</span> kni_misc <span class="token operator">=</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>	<span class="token punctuation">.</span>minor <span class="token operator">=</span> MISC_DYNAMIC_MINOR<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="3"></td><td><pre>	<span class="token punctuation">.</span>name <span class="token operator">=</span> KNI_DEVICE<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="4"></td><td><pre>	<span class="token punctuation">.</span>fops <span class="token operator">=</span> <span class="token operator">&amp;</span>kni_fops<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">file_operations</span> kni_fops <span class="token operator">=</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token punctuation">.</span>owner <span class="token operator">=</span> THIS_MODULE<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token punctuation">.</span>open <span class="token operator">=</span> kni_open<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token punctuation">.</span>release <span class="token operator">=</span> kni_release<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">.</span>unlocked_ioctl <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>kni_ioctl<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token punctuation">.</span>compat_ioctl <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>kni_compat_ioctl<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>这里涉及的主要操作有 kni_open，kni_release，以及 kni_ioctl，分别对应几个函数。</p>
+<h2 id="kni代码分析"><a href="#kni代码分析" class="headerlink" title="kni代码分析"></a>kni代码分析</h2><p>和igb uio模块一样，kni模块分成内核以及用户态代码，内核模块在编译出来之后为rte_kni.ko，首先插入内核，dpdk提供了一个用户态的例子。首先看下kni内核模块代码,在kni_misc.c中，ko代码入口为</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">module_init</span><span class="token punctuation">(</span>kni_init<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>首先选择kni的线程模式，分为单线程还是多线程，所谓单线程是指所有的kni端口收发都由一个线程守护，多线程只是每一个kni端口分为由一个线程守护，这部分是在插入模块时带入参数选择。 接着调用注册函数misc_register，将kni注册为一个混杂设备。其中kni_misc结构体里面定义了该混杂设备的一些操作：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">miscdevice</span> kni_misc <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+	<span class="token punctuation">.</span>minor <span class="token operator">=</span> MISC_DYNAMIC_MINOR<span class="token punctuation">,</span>
+	<span class="token punctuation">.</span>name <span class="token operator">=</span> KNI_DEVICE<span class="token punctuation">,</span>
+	<span class="token punctuation">.</span>fops <span class="token operator">=</span> <span class="token operator">&amp;</span>kni_fops<span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">file_operations</span> kni_fops <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span>owner <span class="token operator">=</span> THIS_MODULE<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>open <span class="token operator">=</span> kni_open<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>release <span class="token operator">=</span> kni_release<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>unlocked_ioctl <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>kni_ioctl<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>compat_ioctl <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>kni_compat_ioctl<span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里涉及的主要操作有kni_open，kni_release，以及kni_ioctl，分别对应几个函数。</p>
 <ul>
 <li>kni_open</li>
 </ul>
-<p>kni_open 时如果是单线程模式则会创建一个内核线程，并打开 dev/kni，这个时候在 host 的 dev 下能看到 kni 文件夹</p>
+<p> kni_open时如果是单线程模式则会创建一个内核线程，并打开dev&#x2F;kni，这个时候在host的dev下能看到kni文件夹</p>
 <ul>
 <li>kni_ioctl</li>
 </ul>
-<p>kni_ioctl 函数是与用户态通信的一个接口，主要是 kni_ioctl_create 函数。</p>
-<p>ret = copy_from_user (&amp;dev_info, (void *) ioctl_param,  sizeof (dev_info)); 这条语句会拷贝从用户态传过来的消息，dev_info 主要存放了虚拟 kni 网口的相关参数，接下来就会根据 dev_info 中的参数注册一个 kni 网口 ret = register_netdev (net_dev);</p>
-<p>这个函数完成创建，这样就虚拟出一个网口出来。其中 165 行是自己修改的，因为我发现按照文档提供的方法根本不能 ping 通报文，我将生成 kni 的 mac 地址修改成 dpdk 接管的网口 mac 即可贯通。原生态代码是随时生成一个 mac。</p>
+<p>kni_ioctl函数是与用户态通信的一个接口，主要是kni_ioctl_create函数。</p>
+<p>ret &#x3D; copy_from_user(&amp;dev_info, (void *)ioctl_param,  sizeof(dev_info));这条语句会拷贝从用户态传过来的消息，dev_info主要存放了虚拟kni网口的相关参数，接下来就会根据dev_info中的参数注册一个kni网口ret &#x3D; register_netdev(net_dev);</p>
+<p>这个函数完成创建，这样就虚拟出一个网口出来。其中165行是自己修改的，因为我发现按照文档提供的方法根本不能ping通报文，我将生成kni的mac地址修改成dpdk接管的网口mac即可贯通。原生态代码是随时生成一个mac。</p>
 <ul>
 <li>杂项设备（misc device）</li>
 </ul>
-<p>杂项设备也是在嵌入式系统中用得比较多的一种设备驱动。在 Linux 内核的 include/linux 目录下有 Miscdevice.h 文件，要把自己定义的 misc device 从设备定义在这里。其实是因为这些字符设备不符合预先确定的字符设备范畴，所有这些设备采用主编号 10 ，一起归于 misc device，其实 misc_register 就是用主标号 10 调用 register_chrdev () 的。</p>
-<p>也就是说，misc 设备其实也就是特殊的字符设备，可自动生成设备节点。</p>
-<h3 id="dpdk-mbuf与sk_buf转换"><a class="markdownIt-Anchor" href="#dpdk-mbuf与sk_buf转换">#</a> dpdk mbuf 与 sk_buf 转换</h3>
-<p>收包时需调用 netif_receive_skb (skb) 或 netif_rx_ni (skb) 通知内核处理包，发包时直接由内核调用 ndo_start_xmit 发出。</p>
+<p>杂项设备也是在嵌入式系统中用得比较多的一种设备驱动。在 Linux 内核的include&#x2F;linux目录下有Miscdevice.h文件，要把自己定义的misc device从设备定义在这里。其实是因为这些字符设备不符合预先确定的字符设备范畴，所有这些设备采用主编号10 ，一起归于misc device，其实misc_register就是用主标号10调用register_chrdev()的。</p>
+<p>也就是说，misc设备其实也就是特殊的字符设备，可自动生成设备节点。</p>
+<h3 id="dpdk-mbuf与sk-buf转换"><a href="#dpdk-mbuf与sk-buf转换" class="headerlink" title="dpdk mbuf与sk_buf转换"></a>dpdk mbuf与sk_buf转换</h3><p>收包时需调用netif_receive_skb(skb)或netif_rx_ni(skb)通知内核处理包，发包时直接由内核调用ndo_start_xmit发出。</p>
 <ul>
 <li>mbuf-&gt;sk_buf（收包）</li>
 </ul>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/*</pre></td></tr><tr><td data-num="2"></td><td><pre> * RX: normal working mode</pre></td></tr><tr><td data-num="3"></td><td><pre> */</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">static</span> <span class="token keyword">void</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">kni_net_rx_normal</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">kni_dev</span> <span class="token operator">*</span>kni<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">unsigned</span> ret<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token class-name">uint32_t</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">unsigned</span> i<span class="token punctuation">,</span> num<span class="token punctuation">,</span> num_rq<span class="token punctuation">,</span> num_fq<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>va<span class="token punctuation">[</span>MBUF_BURST_SZ<span class="token punctuation">]</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token keyword">void</span> <span class="token operator">*</span> data_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre> </pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev <span class="token operator">=</span> kni<span class="token operator">-></span>net_dev<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre> </pre></td></tr><tr><td data-num="17"></td><td><pre>    <span class="token comment">/* 每次收包的个数必须为 rx_q 和 free_q 的最小值且不超过 MBUF_BURST_SZ */</span></pre></td></tr><tr><td data-num="18"></td><td><pre> </pre></td></tr><tr><td data-num="19"></td><td><pre>    <span class="token comment">/* Get the number of entries in rx_q */</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    num_rq <span class="token operator">=</span> <span class="token function">kni_fifo_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>rx_q<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre> </pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token comment">/* Get the number of free entries in free_q */</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    num_fq <span class="token operator">=</span> <span class="token function">kni_fifo_free_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>free_q<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre> </pre></td></tr><tr><td data-num="25"></td><td><pre>    <span class="token comment">/* Calculate the number of entries to dequeue in rx_q */</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    num <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>num_rq<span class="token punctuation">,</span> num_fq<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    num <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>MBUF_BURST_SZ<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="28"></td><td><pre> </pre></td></tr><tr><td data-num="29"></td><td><pre>    <span class="token comment">/* Return if no entry in rx_q and no free entry in free_q */</span></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="31"></td><td><pre>        <span class="token keyword">return</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre> </pre></td></tr><tr><td data-num="33"></td><td><pre>    <span class="token comment">/* Burst dequeue from rx_q */</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    ret <span class="token operator">=</span> <span class="token function">kni_fifo_get</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>rx_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="36"></td><td><pre>        <span class="token keyword">return</span><span class="token punctuation">;</span> <span class="token comment">/* Failing should not happen */</span></pre></td></tr><tr><td data-num="37"></td><td><pre> </pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token comment">/* mbuf 转换为 skb */</span></pre></td></tr><tr><td data-num="39"></td><td><pre>    <span class="token comment">/* Transfer received packets to netif */</span></pre></td></tr><tr><td data-num="40"></td><td><pre>    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> num<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>        <span class="token comment">/* mbuf kva */</span></pre></td></tr><tr><td data-num="42"></td><td><pre>        kva <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>        len <span class="token operator">=</span> kva<span class="token operator">-></span>data_len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>        <span class="token comment">/* data kva */</span></pre></td></tr><tr><td data-num="45"></td><td><pre>        data_kva <span class="token operator">=</span> kva<span class="token operator">-></span>data <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="46"></td><td><pre> </pre></td></tr><tr><td data-num="47"></td><td><pre>        skb <span class="token operator">=</span> <span class="token function">dev_alloc_skb</span><span class="token punctuation">(</span>len <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="48"></td><td><pre>        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>skb<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="49"></td><td><pre>            <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Out of mem, dropping pkts\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="50"></td><td><pre>            <span class="token comment">/* Update statistics */</span></pre></td></tr><tr><td data-num="51"></td><td><pre>            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_dropped<span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="54"></td><td><pre>            <span class="token comment">/* Align IP on 16B boundary */</span></pre></td></tr><tr><td data-num="55"></td><td><pre>            <span class="token function">skb_reserve</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="56"></td><td><pre>            <span class="token function">memcpy</span><span class="token punctuation">(</span><span class="token function">skb_put</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">,</span> data_kva<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="57"></td><td><pre>            skb<span class="token operator">-></span>dev <span class="token operator">=</span> dev<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="58"></td><td><pre>            skb<span class="token operator">-></span>protocol <span class="token operator">=</span> <span class="token function">eth_type_trans</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>            skb<span class="token operator">-></span>ip_summed <span class="token operator">=</span> CHECKSUM_UNNECESSARY<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre> </pre></td></tr><tr><td data-num="61"></td><td><pre>            <span class="token comment">/* 发送 skb 到协议栈 */</span></pre></td></tr><tr><td data-num="62"></td><td><pre>            <span class="token comment">/* Call netif interface */</span></pre></td></tr><tr><td data-num="63"></td><td><pre>            <span class="token function">netif_receive_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="64"></td><td><pre>            <span class="token comment">/* Call netif interface */</span></pre></td></tr><tr><td data-num="65"></td><td><pre>		    <span class="token comment">//netif_rx_ni(skb);//dpdk18.11</span></pre></td></tr><tr><td data-num="66"></td><td><pre> </pre></td></tr><tr><td data-num="67"></td><td><pre>            <span class="token comment">/* Update statistics */</span></pre></td></tr><tr><td data-num="68"></td><td><pre>            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_bytes <span class="token operator">+=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="69"></td><td><pre>            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_packets<span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="70"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="71"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="72"></td><td><pre> </pre></td></tr><tr><td data-num="73"></td><td><pre>    <span class="token comment">/* 通知用户空间释放 mbuf */</span></pre></td></tr><tr><td data-num="74"></td><td><pre>    <span class="token comment">/* Burst enqueue mbufs into free_q */</span></pre></td></tr><tr><td data-num="75"></td><td><pre>    ret <span class="token operator">=</span> <span class="token function">kni_fifo_put</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>free_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="76"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">!=</span> num<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="77"></td><td><pre>        <span class="token comment">/* Failing should not happen */</span></pre></td></tr><tr><td data-num="78"></td><td><pre>        <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to enqueue entries into free_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="79"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
+ * RX: normal working mode
+ */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span>
+<span class="token function">kni_net_rx_normal</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">kni_dev</span> <span class="token operator">*</span>kni<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> ret<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> len<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> i<span class="token punctuation">,</span> num<span class="token punctuation">,</span> num_rq<span class="token punctuation">,</span> num_fq<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>kva<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>va<span class="token punctuation">[</span>MBUF_BURST_SZ<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span> data_kva<span class="token punctuation">;</span>
+ 
+    <span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev <span class="token operator">=</span> kni<span class="token operator">-></span>net_dev<span class="token punctuation">;</span>
+ 
+    <span class="token comment">/* 每次收包的个数必须为rx_q和free_q的最小值且不超过MBUF_BURST_SZ */</span>
+ 
+    <span class="token comment">/* Get the number of entries in rx_q */</span>
+    num_rq <span class="token operator">=</span> <span class="token function">kni_fifo_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>rx_q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">/* Get the number of free entries in free_q */</span>
+    num_fq <span class="token operator">=</span> <span class="token function">kni_fifo_free_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>free_q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">/* Calculate the number of entries to dequeue in rx_q */</span>
+    num <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>num_rq<span class="token punctuation">,</span> num_fq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    num <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>MBUF_BURST_SZ<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">/* Return if no entry in rx_q and no free entry in free_q */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">/* Burst dequeue from rx_q */</span>
+    ret <span class="token operator">=</span> <span class="token function">kni_fifo_get</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>rx_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span> <span class="token comment">/* Failing should not happen */</span>
+ 
+    <span class="token comment">/* mbuf转换为skb */</span>
+    <span class="token comment">/* Transfer received packets to netif */</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> num<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* mbuf kva */</span>
+        kva <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span>
+        len <span class="token operator">=</span> kva<span class="token operator">-></span>data_len<span class="token punctuation">;</span>
+        <span class="token comment">/* data kva */</span>
+        data_kva <span class="token operator">=</span> kva<span class="token operator">-></span>data <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span>
+ 
+        skb <span class="token operator">=</span> <span class="token function">dev_alloc_skb</span><span class="token punctuation">(</span>len <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>skb<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Out of mem, dropping pkts\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">/* Update statistics */</span>
+            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_dropped<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/* Align IP on 16B boundary */</span>
+            <span class="token function">skb_reserve</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">memcpy</span><span class="token punctuation">(</span><span class="token function">skb_put</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">,</span> data_kva<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            skb<span class="token operator">-></span>dev <span class="token operator">=</span> dev<span class="token punctuation">;</span>
+            skb<span class="token operator">-></span>protocol <span class="token operator">=</span> <span class="token function">eth_type_trans</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            skb<span class="token operator">-></span>ip_summed <span class="token operator">=</span> CHECKSUM_UNNECESSARY<span class="token punctuation">;</span>
+ 
+            <span class="token comment">/* 发送skb到协议栈 */</span>
+            <span class="token comment">/* Call netif interface */</span>
+            <span class="token function">netif_receive_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">/* Call netif interface */</span>
+		    <span class="token comment">//netif_rx_ni(skb);//dpdk18.11</span>
+ 
+            <span class="token comment">/* Update statistics */</span>
+            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_bytes <span class="token operator">+=</span> len<span class="token punctuation">;</span>
+            kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>rx_packets<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+ 
+    <span class="token comment">/* 通知用户空间释放mbuf */</span>
+    <span class="token comment">/* Burst enqueue mbufs into free_q */</span>
+    ret <span class="token operator">=</span> <span class="token function">kni_fifo_put</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>free_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>va<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">!=</span> num<span class="token punctuation">)</span>
+        <span class="token comment">/* Failing should not happen */</span>
+        <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to enqueue entries into free_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
 <li>sk_buf-&gt;mbuf（发包）</li>
 </ul>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">static</span> <span class="token keyword">int</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">kni_net_tx</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">unsigned</span> ret<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">kni_dev</span> <span class="token operator">*</span>kni <span class="token operator">=</span> <span class="token function">netdev_priv</span><span class="token punctuation">(</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>pkt_kva <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>pkt_va <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre> </pre></td></tr><tr><td data-num="10"></td><td><pre>    dev<span class="token operator">-></span>trans_start <span class="token operator">=</span> jiffies<span class="token punctuation">;</span> <span class="token comment">/* save the timestamp */</span></pre></td></tr><tr><td data-num="11"></td><td><pre> </pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token comment">/* Check if the length of skb is less than mbuf size */</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span>skb<span class="token operator">-></span>len <span class="token operator">></span> kni<span class="token operator">-></span>mbuf_size<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre> </pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token comment">/**</pre></td></tr><tr><td data-num="17"></td><td><pre>     * Check if it has at least one free entry in tx_q and</pre></td></tr><tr><td data-num="18"></td><td><pre>     * one entry in alloc_q.</pre></td></tr><tr><td data-num="19"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">kni_fifo_free_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>tx_q<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span></pre></td></tr><tr><td data-num="21"></td><td><pre>            <span class="token function">kni_fifo_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>alloc_q<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>        <span class="token comment">/**</pre></td></tr><tr><td data-num="23"></td><td><pre>         * If no free entry in tx_q or no entry in alloc_q,</pre></td></tr><tr><td data-num="24"></td><td><pre>         * drops skb and goes out.</pre></td></tr><tr><td data-num="25"></td><td><pre>         */</span></pre></td></tr><tr><td data-num="26"></td><td><pre>        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="28"></td><td><pre> </pre></td></tr><tr><td data-num="29"></td><td><pre>    <span class="token comment">/* skb 转 mbuf */</span></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token comment">/* dequeue a mbuf from alloc_q */</span></pre></td></tr><tr><td data-num="31"></td><td><pre>    ret <span class="token operator">=</span> <span class="token function">kni_fifo_get</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>alloc_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>pkt_va<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">likely</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>        <span class="token keyword">void</span> <span class="token operator">*</span>data_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre> </pre></td></tr><tr><td data-num="35"></td><td><pre>        pkt_kva <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>pkt_va <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>        data_kva <span class="token operator">=</span> pkt_kva<span class="token operator">-></span>data <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre> </pre></td></tr><tr><td data-num="38"></td><td><pre>        len <span class="token operator">=</span> skb<span class="token operator">-></span>len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>        <span class="token function">memcpy</span><span class="token punctuation">(</span>data_kva<span class="token punctuation">,</span> skb<span class="token operator">-></span>data<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre>        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>len <span class="token operator">&lt;</span> ETH_ZLEN<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>            <span class="token function">memset</span><span class="token punctuation">(</span>data_kva <span class="token operator">+</span> len<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ETH_ZLEN <span class="token operator">-</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="42"></td><td><pre>            len <span class="token operator">=</span> ETH_ZLEN<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>        pkt_kva<span class="token operator">-></span>pkt_len <span class="token operator">=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>        pkt_kva<span class="token operator">-></span>data_len <span class="token operator">=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="46"></td><td><pre> </pre></td></tr><tr><td data-num="47"></td><td><pre>        <span class="token comment">/* enqueue mbuf into tx_q */</span></pre></td></tr><tr><td data-num="48"></td><td><pre>        ret <span class="token operator">=</span> <span class="token function">kni_fifo_put</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>tx_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>pkt_va<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="49"></td><td><pre>        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>ret <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="50"></td><td><pre>            <span class="token comment">/* Failing should not happen */</span></pre></td></tr><tr><td data-num="51"></td><td><pre>            <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to enqueue mbuf into tx_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre>            <span class="token keyword">goto</span> drop<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="54"></td><td><pre>    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>        <span class="token comment">/* Failing should not happen */</span></pre></td></tr><tr><td data-num="56"></td><td><pre>        <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to dequeue mbuf from alloc_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="57"></td><td><pre>        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="58"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="59"></td><td><pre> </pre></td></tr><tr><td data-num="60"></td><td><pre>    <span class="token comment">/* Free skb and update statistics */</span></pre></td></tr><tr><td data-num="61"></td><td><pre>    <span class="token function">dev_kfree_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="62"></td><td><pre>    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_bytes <span class="token operator">+=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="63"></td><td><pre>    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_packets<span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="64"></td><td><pre> </pre></td></tr><tr><td data-num="65"></td><td><pre>    <span class="token keyword">return</span> NETDEV_TX_OK<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="66"></td><td><pre> </pre></td></tr><tr><td data-num="67"></td><td><pre>drop<span class="token operator">:</span></pre></td></tr><tr><td data-num="68"></td><td><pre>    <span class="token comment">/* Free skb and update statistics */</span></pre></td></tr><tr><td data-num="69"></td><td><pre>    <span class="token function">dev_kfree_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="70"></td><td><pre>    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_dropped<span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="71"></td><td><pre> </pre></td></tr><tr><td data-num="72"></td><td><pre>    <span class="token keyword">return</span> NETDEV_TX_OK<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="73"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="kni运行"><a class="markdownIt-Anchor" href="#kni运行">#</a> kni 运行</h2>
-<h3 id="编译"><a class="markdownIt-Anchor" href="#编译">#</a> 编译</h3>
-<ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span>
+<span class="token function">kni_net_tx</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">kni_dev</span> <span class="token operator">*</span>kni <span class="token operator">=</span> <span class="token function">netdev_priv</span><span class="token punctuation">(</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>pkt_kva <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">rte_kni_mbuf</span> <span class="token operator">*</span>pkt_va <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+ 
+    dev<span class="token operator">-></span>trans_start <span class="token operator">=</span> jiffies<span class="token punctuation">;</span> <span class="token comment">/* save the timestamp */</span>
+ 
+    <span class="token comment">/* Check if the length of skb is less than mbuf size */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>skb<span class="token operator">-></span>len <span class="token operator">></span> kni<span class="token operator">-></span>mbuf_size<span class="token punctuation">)</span>
+        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+ 
+    <span class="token comment">/**
+     * Check if it has at least one free entry in tx_q and
+     * one entry in alloc_q.
+     */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">kni_fifo_free_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>tx_q<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span>
+            <span class="token function">kni_fifo_count</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>alloc_q<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/**
+         * If no free entry in tx_q or no entry in alloc_q,
+         * drops skb and goes out.
+         */</span>
+        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+ 
+    <span class="token comment">/* skb转mbuf */</span>
+    <span class="token comment">/* dequeue a mbuf from alloc_q */</span>
+    ret <span class="token operator">=</span> <span class="token function">kni_fifo_get</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>alloc_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>pkt_va<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">likely</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span>data_kva<span class="token punctuation">;</span>
+ 
+        pkt_kva <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>pkt_va <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span>
+        data_kva <span class="token operator">=</span> pkt_kva<span class="token operator">-></span>data <span class="token operator">-</span> kni<span class="token operator">-></span>mbuf_va <span class="token operator">+</span> kni<span class="token operator">-></span>mbuf_kva<span class="token punctuation">;</span>
+ 
+        len <span class="token operator">=</span> skb<span class="token operator">-></span>len<span class="token punctuation">;</span>
+        <span class="token function">memcpy</span><span class="token punctuation">(</span>data_kva<span class="token punctuation">,</span> skb<span class="token operator">-></span>data<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>len <span class="token operator">&lt;</span> ETH_ZLEN<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">memset</span><span class="token punctuation">(</span>data_kva <span class="token operator">+</span> len<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ETH_ZLEN <span class="token operator">-</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            len <span class="token operator">=</span> ETH_ZLEN<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        pkt_kva<span class="token operator">-></span>pkt_len <span class="token operator">=</span> len<span class="token punctuation">;</span>
+        pkt_kva<span class="token operator">-></span>data_len <span class="token operator">=</span> len<span class="token punctuation">;</span>
+ 
+        <span class="token comment">/* enqueue mbuf into tx_q */</span>
+        ret <span class="token operator">=</span> <span class="token function">kni_fifo_put</span><span class="token punctuation">(</span>kni<span class="token operator">-></span>tx_q<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>pkt_va<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>ret <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/* Failing should not happen */</span>
+            <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to enqueue mbuf into tx_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* Failing should not happen */</span>
+        <span class="token function">KNI_ERR</span><span class="token punctuation">(</span><span class="token string">"Fail to dequeue mbuf from alloc_q\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+ 
+    <span class="token comment">/* Free skb and update statistics */</span>
+    <span class="token function">dev_kfree_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_bytes <span class="token operator">+=</span> len<span class="token punctuation">;</span>
+    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_packets<span class="token operator">++</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> NETDEV_TX_OK<span class="token punctuation">;</span>
+ 
+drop<span class="token operator">:</span>
+    <span class="token comment">/* Free skb and update statistics */</span>
+    <span class="token function">dev_kfree_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    kni<span class="token operator">-></span>stats<span class="token punctuation">.</span>tx_dropped<span class="token operator">++</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> NETDEV_TX_OK<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="kni运行"><a href="#kni运行" class="headerlink" title="kni运行"></a>kni运行</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><ul>
 <li>x86</li>
 </ul>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">make</span> config <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc <span class="token assign-left variable">EXTRA_CFLAGS</span><span class="token operator">=</span><span class="token string">'-g -Ofast -fPIC -ftls-model=local-dynamic'</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">make</span> <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc  <span class="token assign-left variable">CONFIG_RTE_KNI_KMOD</span><span class="token operator">=</span>y <span class="token assign-left variable">CONFIG_RTE_EAL_IGB_UIO</span><span class="token operator">=</span>y <span class="token assign-left variable">EXTRA_CFLAGS</span><span class="token operator">=</span><span class="token string">'-g -Ofast -fPIC -ftls-model=local-dynamic'</span> <span class="token function">install</span> -j <span class="token number">8</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">make</span> examples <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc <span class="token assign-left variable">O</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc -j16</pre></td></tr></table></figure><h3 id="执行"><a class="markdownIt-Anchor" href="#执行">#</a> 执行</h3>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>kni <span class="token punctuation">[</span>EAL options<span class="token punctuation">]</span> -- -p PORTMASK --config<span class="token operator">=</span><span class="token string">"(port,lcore_rx,lcore_tx[,lcore_kthread,...])[,(port,lcore_rx,lcore_tx[,lcore_kthread,...])]"</span> <span class="token punctuation">[</span>-P<span class="token punctuation">]</span> <span class="token punctuation">[</span>-m<span class="token punctuation">]</span></pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre>-p PORTMASK:</pre></td></tr><tr><td data-num="5"></td><td><pre>十六进制接口掩码</pre></td></tr><tr><td data-num="6"></td><td><pre>--config<span class="token operator">=</span><span class="token string">"(port,lcore_rx,lcore_tx[,lcore_kthread,...])[,(port,lcore_rx,lcore_tx[,lcore_kthread,...])]"</span><span class="token builtin class-name">:</span></pre></td></tr><tr><td data-num="7"></td><td><pre>指定对于每个物理网口，接收和发送DPDK线程绑定的核心，以及KNI内核线程绑定的核心</pre></td></tr><tr><td data-num="8"></td><td><pre>-P:</pre></td></tr><tr><td data-num="9"></td><td><pre>可选标志，设置的话意味着混杂模式，以便不区分以太网目的MAC地址，接收所有报文。不设置此选项，仅目的MAC地址等于接口MAC地址的报文被接收</pre></td></tr><tr><td data-num="10"></td><td><pre>-m:</pre></td></tr><tr><td data-num="11"></td><td><pre>可选标志。使能监控模式并更新以太网链路状态。此选项需要启动一个DPDK线程定期检查物理接口链路状态，同步相应的KNI虚拟网口状态。意味着当以太网链路down的时候，KNI虚拟接口将自动禁用，反之，自动启用。</pre></td></tr></table></figure><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment"># rmmod rte_kni</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment"># insmod kmod/rte_kni.ko</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment"># sudo ./kni -l 0-3 -n 4 -- -P -p 0x3 -m --config="(0,0,1),(1,2,3)"</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment"># -l 0-3 使用 0-3 核</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token comment"># -n 4   使用 4 个核</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token comment"># -p 0x3 (11) 使用两个网口，port 0 和 port 1</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token comment"># --config="(0,0,1),(1,2,3)" </span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token comment"># (0,0,1) port 0 使用 0 核 rx，1 核 tx</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token comment"># (1,2,3) port 1 使用 2 核 rx，3 核 tx</span></pre></td></tr><tr><td data-num="10"></td><td><pre>./kni -l <span class="token number">0</span>-1 -n <span class="token number">2</span> -- -p 0x1 -P --config<span class="token operator">=</span><span class="token string">"(0,0,1)"</span></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token function">ifconfig</span> vEth0 <span class="token number">121.168</span>.1.12/24</pre></td></tr></table></figure><h3 id="定位追踪"><a class="markdownIt-Anchor" href="#定位追踪">#</a> 定位追踪</h3>
-<p>在 kni_net.c 的 kni_rx_normal 中的 382 行添加如下代码：</p>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">pr_info</span><span class="token punctuation">(</span><span class="token string">"kni recv a packet\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>使用 dmesg 观察输出。</p>
-<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">RTE_LOG</span><span class="token punctuation">(</span>INFO<span class="token punctuation">,</span> APP<span class="token punctuation">,</span> <span class="token string">"kni send %lu packets\n"</span><span class="token punctuation">,</span>kni_stats<span class="token punctuation">[</span>port_id<span class="token punctuation">]</span><span class="token punctuation">.</span>tx_packets<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h2 id="测试"><a class="markdownIt-Anchor" href="#测试">#</a> 测试</h2>
-<p>一端使用 pktgen 回放报文到 kni 口，分别使用大包和小包。大包使用 GTPU 报文或者其他 TCP/IP 报文，小包使用 arp 报文。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> config <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc <span class="token assign-left variable">EXTRA_CFLAGS</span><span class="token operator">=</span><span class="token string">'-g -Ofast -fPIC -ftls-model=local-dynamic'</span>
+<span class="token function">make</span> <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc  <span class="token assign-left variable">CONFIG_RTE_KNI_KMOD</span><span class="token operator">=</span>y <span class="token assign-left variable">CONFIG_RTE_EAL_IGB_UIO</span><span class="token operator">=</span>y <span class="token assign-left variable">EXTRA_CFLAGS</span><span class="token operator">=</span><span class="token string">'-g -Ofast -fPIC -ftls-model=local-dynamic'</span> <span class="token function">install</span> <span class="token parameter variable">-j</span> <span class="token number">8</span>
+<span class="token function">make</span> examples <span class="token assign-left variable">T</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc <span class="token assign-left variable">O</span><span class="token operator">=</span>x86_64-native-linuxapp-gcc <span class="token parameter variable">-j16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kni <span class="token punctuation">[</span>EAL options<span class="token punctuation">]</span> -- <span class="token parameter variable">-p</span> PORTMASK <span class="token parameter variable">--config</span><span class="token operator">=</span><span class="token string">"(port,lcore_rx,lcore_tx[,lcore_kthread,...])[,(port,lcore_rx,lcore_tx[,lcore_kthread,...])]"</span> <span class="token punctuation">[</span>-P<span class="token punctuation">]</span> <span class="token punctuation">[</span>-m<span class="token punctuation">]</span>
+
+
+<span class="token parameter variable">-p</span> PORTMASK:
+十六进制接口掩码
+<span class="token parameter variable">--config</span><span class="token operator">=</span><span class="token string">"(port,lcore_rx,lcore_tx[,lcore_kthread,...])[,(port,lcore_rx,lcore_tx[,lcore_kthread,...])]"</span><span class="token builtin class-name">:</span>
+指定对于每个物理网口，接收和发送DPDK线程绑定的核心，以及KNI内核线程绑定的核心
+-P:
+可选标志，设置的话意味着混杂模式，以便不区分以太网目的MAC地址，接收所有报文。不设置此选项，仅目的MAC地址等于接口MAC地址的报文被接收
+-m:
+可选标志。使能监控模式并更新以太网链路状态。此选项需要启动一个DPDK线程定期检查物理接口链路状态，同步相应的KNI虚拟网口状态。意味着当以太网链路down的时候，KNI虚拟接口将自动禁用，反之，自动启用。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># rmmod rte_kni</span>
+<span class="token comment"># insmod kmod/rte_kni.ko</span>
+<span class="token comment"># sudo ./kni -l 0-3 -n 4 -- -P -p 0x3 -m --config="(0,0,1),(1,2,3)"</span>
+<span class="token comment"># -l 0-3 使用0-3核</span>
+<span class="token comment"># -n 4   使用4个核</span>
+<span class="token comment"># -p 0x3 (11)使用两个网口，port 0和port 1</span>
+<span class="token comment"># --config="(0,0,1),(1,2,3)" </span>
+<span class="token comment"># (0,0,1) port 0 使用0核rx，1核tx</span>
+<span class="token comment"># (1,2,3) port 1 使用2核rx，3核tx</span>
+./kni <span class="token parameter variable">-l</span> <span class="token number">0</span>-1 <span class="token parameter variable">-n</span> <span class="token number">2</span> -- <span class="token parameter variable">-p</span> 0x1 <span class="token parameter variable">-P</span> <span class="token parameter variable">--config</span><span class="token operator">=</span><span class="token string">"(0,0,1)"</span>
+
+<span class="token function">ifconfig</span> vEth0 <span class="token number">121.168</span>.1.12/24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="定位追踪"><a href="#定位追踪" class="headerlink" title="定位追踪"></a>定位追踪</h3><p>在kni_net.c的kni_rx_normal中的382行添加如下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">pr_info</span><span class="token punctuation">(</span><span class="token string">"kni recv a packet\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用dmesg观察输出。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">RTE_LOG</span><span class="token punctuation">(</span>INFO<span class="token punctuation">,</span> APP<span class="token punctuation">,</span> <span class="token string">"kni send %lu packets\n"</span><span class="token punctuation">,</span>kni_stats<span class="token punctuation">[</span>port_id<span class="token punctuation">]</span><span class="token punctuation">.</span>tx_packets<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>一端使用pktgen回放报文到kni口，分别使用大包和小包。大包使用GTPU报文或者其他TCP&#x2F;IP报文，小包使用arp报文。</p>
 <ul>
-<li>大包 (包长 1460)</li>
+<li>大包(包长1460)</li>
 </ul>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>./app/x86_64-native-linuxapp-gcc/pktgen -c 0xe0000 --socket-mem <span class="token number">1024</span> -n <span class="token number">2</span> -- -P -m <span class="token punctuation">[</span><span class="token number">18</span>:19<span class="token punctuation">]</span>.0 -s <span class="token number">0</span>:gtpu.pcap -T --crc-strip</pre></td></tr></table></figure><ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./app/x86_64-native-linuxapp-gcc/pktgen <span class="token parameter variable">-c</span> 0xe0000 --socket-mem <span class="token number">1024</span> <span class="token parameter variable">-n</span> <span class="token number">2</span> -- <span class="token parameter variable">-P</span> <span class="token parameter variable">-m</span> <span class="token punctuation">[</span><span class="token number">18</span>:19<span class="token punctuation">]</span>.0 <span class="token parameter variable">-s</span> <span class="token number">0</span>:gtpu.pcap <span class="token parameter variable">-T</span> --crc-strip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
 <li>小包（）</li>
 </ul>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre>./app/x86_64-native-linuxapp-gcc/pktgen -c 0xe0000 --socket-mem <span class="token number">1024</span> -n <span class="token number">2</span> -- -P -m <span class="token punctuation">[</span><span class="token number">18</span>:19<span class="token punctuation">]</span>.0 -s <span class="token number">0</span>:arp_request.pcap -T --crc-strip</pre></td></tr></table></figure><p>kni 端的 ip 需要根据抓包报文进行修改。</p>
-<p><font color="red">10G 网口大包大致可以跑到 4Gbps 线速，小包 10G 网口大致可以跑到 50Mbps 线速。</font></p>
-<h1 id="reference"><a class="markdownIt-Anchor" href="#reference">#</a> reference</h1>
-<ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20va2IzNDIvcC82MDMzMTM5Lmh0bWw=">https://www.cnblogs.com/kb342/p/6033139.html</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTMyMTYwNjEvYXJ0aWNsZS9kZXRhaWxzLzcyNTExNjUz">https://blog.csdn.net/u013216061/article/details/72511653</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZXNpb24uY29tL2FydGljbGUvMTQ4ODIxOTkxLw==">https://www.freesion.com/article/148821991/</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3doZW5sb2NlL2FydGljbGUvZGV0YWlscy85NDU5MTM1Nw==">https://blog.csdn.net/whenloce/article/details/94591357</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbmhhbmdmZW5nc2h1YWkvYXJ0aWNsZS9kZXRhaWxzLzUwNTMzMjMw">https://blog.csdn.net/nanhangfengshuai/article/details/50533230</span></li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./app/x86_64-native-linuxapp-gcc/pktgen <span class="token parameter variable">-c</span> 0xe0000 --socket-mem <span class="token number">1024</span> <span class="token parameter variable">-n</span> <span class="token number">2</span> -- <span class="token parameter variable">-P</span> <span class="token parameter variable">-m</span> <span class="token punctuation">[</span><span class="token number">18</span>:19<span class="token punctuation">]</span>.0 <span class="token parameter variable">-s</span> <span class="token number">0</span>:arp_request.pcap <span class="token parameter variable">-T</span> --crc-strip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>kni端的ip需要根据抓包报文进行修改。</p>
+<p><font color="red">10G网口大包大致可以跑到4Gbps线速，小包10G网口大致可以跑到50Mbps线速。</font></p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kb342/p/6033139.html">https://www.cnblogs.com/kb342/p/6033139.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013216061/article/details/72511653">https://blog.csdn.net/u013216061/article/details/72511653</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.freesion.com/article/148821991/">https://www.freesion.com/article/148821991/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/whenloce/article/details/94591357">https://blog.csdn.net/whenloce/article/details/94591357</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/nanhangfengshuai/article/details/50533230">https://blog.csdn.net/nanhangfengshuai/article/details/50533230</a></li>
 </ol>
 
-      <div class="tags">
-          <a href="/tags/dpdk/" rel="tag"><i class="ic i-tag"></i> dpdk</a>
-          <a href="/tags/kni/" rel="tag"><i class="ic i-tag"></i> kni</a>
-          <a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
-      </div>
-  </div>
+                
+            </div>
+            <hr/>
 
-   <footer>
+            
 
-    <div class="meta">
-  <span class="item">
-    <span class="icon">
-      <i class="ic i-calendar-check"></i>
-    </span>
-    <span class="text">更新于</span>
-    <time title="修改时间：2023-02-07 11:38:15" itemprop="dateModified" datetime="2023-02-07T11:38:15+08:00">2023-02-07</time>
-  </span>
-  <span id="2022/07/26/dpdk-kni-use/" class="item leancloud_visitors" data-flag-title="dpdk_kni_use" title="阅读次数">
-      <span class="icon">
-        <i class="ic i-eye"></i>
-      </span>
-      <span class="text">阅读次数</span>
-      <span class="leancloud-visitors-count"></span>
-      <span class="text">次</span>
-  </span>
-</div>
-
-      
-<div class="reward">
-  <button><i class="ic i-heartbeat"></i> 赞赏</button>
-  <p>请我喝[茶]~(￣▽￣)~*</p>
-  <div id="qr">
-      
-      <div>
-        <img data-src="/images/wechatpay.png" alt="growdu 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/alipay.png" alt="growdu 支付宝">
-        <p>支付宝</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/paypal.png" alt="growdu 贝宝">
-        <p>贝宝</p>
-      </div>
-  </div>
-</div>
-
-      
-
-<div id="copyright">
-<ul>
-  <li class="author">
-    <strong>本文作者： </strong>growdu <i class="ic i-at"><em>@</em></i>人生，不必悲伤。若是美好，便是精彩；若是糟糕，便是经历。
-  </li>
-  <li class="link">
-    <strong>本文链接：</strong>
-    <a href="http://growdu.online/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">http://growdu.online/2022/07/26/dpdk-kni-use/</a>
-  </li>
-  <li class="license">
-    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-  </footer>
-
-</article>
-
-  </div>
-  
-
-<div class="post-nav">
-    <div class="item left">
-      
-
-  <a href="/2022/07/26/use-code-server/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicit31ffoj20zk0m8naf.jpg" title="use-code-server">
-  <span class="type">上一篇</span>
-  <span class="category"><i class="ic i-flag"></i> 环境搭建</span>
-  <h3>use-code-server</h3>
-  </a>
-
-    </div>
-    <div class="item right">
-      
-
-  <a href="/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewr8iypj20zk0m8b29.jpg" title="vpp开发指南">
-  <span class="type">下一篇</span>
-  <span class="category"><i class="ic i-flag"></i> vpp</span>
-  <h3>vpp开发指南</h3>
-  </a>
-
-    </div>
-</div>
-
-  
-  <div class="wrap" id="comments"></div>
-
-
-        </div>
-        <div id="sidebar">
-          
-
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dpdk%E4%B9%8Bkni%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> dpdk 之 kni 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFkni"><span class="toc-number">1.1.</span> <span class="toc-text"> 什么是 kni</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kni%E4%BC%98%E5%8A%BF"><span class="toc-number">1.1.1.</span> <span class="toc-text"> kni 优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kni%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text"> kni 代码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dpdk-mbuf%E4%B8%8Esk_buf%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.2.1.</span> <span class="toc-text"> dpdk mbuf 与 sk_buf 转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kni%E8%BF%90%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text"> kni 运行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D%E8%BF%BD%E8%B8%AA"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 定位追踪</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.</span> <span class="toc-text"> 测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">2.</span> <span class="toc-text"> reference</span></a></li></ol>
-      </div>
-      <div class="related panel pjax" data-title="系列文章">
-        <ul>
-          <li class="active"><a href="/2022/07/26/dpdk-kni-use/" rel="bookmark" title="dpdk_kni_use">dpdk_kni_use</a></li>
-        </ul>
-      </div>
-      <div class="overview panel" data-title="站点概览">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="growdu"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">growdu</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">10</span>
-        <span class="name">文章</span>
-      </a>
-    </div>
-    <div class="item categories">
-      <a href="/categories/">
-        <span class="count">8</span>
-        <span class="name">分类</span>
-      </a>
-    </div>
-    <div class="item tags">
-      <a href="/tags/">
-        <span class="count">24</span>
-        <span class="name">标签</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
-      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dyb3dkdQ==" title="https:&#x2F;&#x2F;github.com&#x2F;growdu"><i class="ic i-github"></i></span>
-</div>
-
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
-  </li>
-
+    <div class="reprint" id="reprint-statement">
         
-  <li class="item dropdown">
-      <a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a>
-    <ul class="submenu">
-
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">growdu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://growdu.github.io/2022/07/26/dpdk-kni-use/">https://growdu.github.io/2022/07/26/dpdk-kni-use/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">growdu</a>
+                    !
+                </span>
+            </div>
         
-  <li class="item">
-    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
-  </li>
-
-        
-  <li class="item">
-    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
-  </li>
-
-        
-  <li class="item">
-    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
-  </li>
-
-  </ul>
-    
-  <li class="item">
-    <a href="/friends/" rel="section"><i class="ic i-heart"></i>friends</a>
-  </li>
-
-    
-  <li class="item">
-    <a href="/links/" rel="section"><i class="ic i-magic"></i>links</a>
-  </li>
-
-    
-  <li class="item">
-    <a href="/about/" rel="section"><i class="ic i-user"></i>关于</a>
-  </li>
-
-
-</ul>
-
-      </div>
     </div>
-  </div>
 
-  <ul id="quick">
-    <li class="prev pjax">
-        <a href="/2022/07/26/use-code-server/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-        <a href="/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
-    </li>
-    <li class="percent"></li>
-  </ul>
-</div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>随机文章</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" title="分类于 分布式">分布式</a>
-</div>
-
-    <span><a href="/2022/07/29/zookeeper%E4%B8%BB%E5%A4%87%E9%9B%86%E7%BE%A4demo/" title="zookeeper主备集群demo">zookeeper主备集群demo</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/vpp/" title="分类于 vpp">vpp</a>
-</div>
-
-    <span><a href="/2022/07/27/vpp%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="vpp开发指南">vpp开发指南</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/c/" title="分类于 c">c</a>
-</div>
-
-    <span><a href="/2022/07/29/%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84%EF%BC%88%E6%9F%94%E6%80%A7%E6%95%B0%E7%BB%84%EF%BC%89/" title="变长数组（柔性数组）">变长数组（柔性数组）</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/tcp/" title="分类于 tcp">tcp</a>
-</div>
-
-    <span><a href="/2022/07/29/tcpdump%E6%8A%93%E5%8C%85/" title="tcpdump抓包">tcpdump抓包</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="分类于 环境搭建">环境搭建</a>
-</div>
-
-    <span><a href="/2022/07/26/use-code-server/" title="use-code-server">use-code-server</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/tcp/" title="分类于 tcp">tcp</a>
-</div>
-
-    <span><a href="/2022/07/28/%E7%BC%A9%E7%9F%ADtcp%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%B9%E6%B3%95/" title="缩短tcp超时时间的方法">缩短tcp超时时间的方法</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/dpdk/" title="分类于 dpdk">dpdk</a>
-</div>
-
-    <span><a href="/2022/07/26/dpdk-kni-use/" title="dpdk_kni_use">dpdk_kni_use</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/docker/" title="分类于 docker">docker</a>
-</div>
-
-    <span><a href="/2022/07/29/docker%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/" title="docker与宿主机共享内存通信">docker与宿主机共享内存通信</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/c/" title="分类于 c">c</a>
-</div>
-
-    <span><a href="/2022/07/29/autoconf%E4%BD%BF%E7%94%A8/" title="autoconf使用">autoconf使用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/database/" title="分类于 database">database</a>
-</div>
-
-    <span><a href="/2022/07/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%97%E6%8A%98%E6%96%AD%EF%BC%89/" title="数据库数据完整性问题（块折断）">数据库数据完整性问题（块折断）</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>最新评论</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2022 – 
-    <span itemprop="copyrightYear">2023</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">growdu @ growdu</span>
-  </div>
-  <div class="count">
-    <span class="post-meta-item-icon">
-      <i class="ic i-chart-area"></i>
-    </span>
-    <span title="站点总字数">32k 字</span>
-
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="ic i-coffee"></i>
-    </span>
-    <span title="站点阅读时长">29 分钟</span>
-  </div>
-  <div class="powered-by">
-    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '2022/07/26/dpdk-kni-use/',
-    favicon: {
-      show: "（●´3｀●）やれやれだぜ",
-      hide: "(´Д｀)大変だ！"
-    },
-    search : {
-      placeholder: "文章搜索",
-      empty: "关于 「 ${query} 」，什么也没搜到",
-      stats: "${time} ms 内找到 ${hits} 条结果"
-    },
-    valine: true,fancybox: true,
-    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
       }
-    ]
-  };
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/linux/">
+                                    <span class="chip bg-color">linux</span>
+                                </a>
+                            
+                                <a href="/tags/dpdk/">
+                                    <span class="chip bg-color">dpdk</span>
+                                </a>
+                            
+                                <a href="/tags/kni/">
+                                    <span class="chip bg-color">kni</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
 </script>
 
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+            
+        </div>
+    </div>
 
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+    
 
-<script src="/js/app.js?v=0.2.5"></script>
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'BGicgelbsRYubrc1I1gvc2BK-gzGzoHsz',
+        appKey: 'vHuhOkUldA3XsUddZkBIvvgO',
+        serverURLs: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/07/27/vpp-kai-fa-zhi-nan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="vpp开发指南">
+                        
+                        <span class="card-title">vpp开发指南</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vpp/" class="post-category">
+                                    vpp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vpp/">
+                        <span class="chip bg-color">vpp</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/26/dpdk-kni-use/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="dpdk_kni_use">
+                        
+                        <span class="card-title">dpdk_kni_use</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/dpdk/" class="post-category">
+                                    dpdk
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/linux/">
+                        <span class="chip bg-color">linux</span>
+                    </a>
+                    
+                    <a href="/tags/dpdk/">
+                        <span class="chip bg-color">dpdk</span>
+                    </a>
+                    
+                    <a href="/tags/kni/">
+                        <span class="chip bg-color">kni</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
 
 
 
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">growdu</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">18.2k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/growdu" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2689304284@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2689304284" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2689304284" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3618063929482252"
+     crossorigin="anonymous"></script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
+
 </html>
